@@ -191,6 +191,24 @@ body {
     text-align: center;
 }
 
+.footer {
+    margin-top: 60px;
+    padding: 24px 16px;
+    border-top: 1px solid #ecece8;
+    color: #777;
+    font-size: 12px;
+    line-height: 1.7;
+    text-align: center;
+}
+
+.footer p {
+    margin: 4px 0;
+}
+
+.footer a {
+    color: #555;
+}
+
 @media (max-width: 520px) {
 
     .market-heading h1 {
