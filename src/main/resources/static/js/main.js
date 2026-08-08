@@ -1,101 +1,396 @@
-// 날짜 선택 버튼들을 모두 찾습니다.
 const dateButtons = document.querySelectorAll(".date-buttons button");
 
-// 장날 찾기 버튼을 찾습니다.
 const searchButton = document.getElementById("searchButton");
 
-// 현재 위치 검색 버튼을 찾습니다.
 const locationButton = document.getElementById("locationButton");
 
-// 현재 선택된 날짜 조건을 저장합니다.
-// 처음 화면에서는 '오늘'이 기본값입니다.
+const provinceSelect = document.getElementById("province");
+
+const cityCountySelect = document.getElementById("cityCounty");
+
+const marketList = document.getElementById("marketList");
+
+const sectionTitle = document.querySelector(".section-title");
+
+const customDateInput =
+    document.getElementById("customDate");
+
+let customSelectedDate = null;
+
 let selectedDateType = "today";
 
-// 날짜 버튼마다 클릭 이벤트를 등록합니다.
+
+// 페이지가 열리면 도/광역시 목록을 조회합니다.
+loadProvinces();
+
+
+async function loadProvinces() {
+
+    try {
+        const response = await fetch("/api/regions/provinces");
+
+        if (!response.ok) {
+            throw new Error("지역 목록 조회에 실패했습니다.");
+        }
+
+        const provinces = await response.json();
+
+        provinces.forEach((province) => {
+
+            const option = document.createElement("option");
+
+            option.value = province;
+            option.textContent = province;
+
+            provinceSelect.appendChild(option);
+        });
+
+    } catch (error) {
+        console.error(error);
+        alert("지역 목록을 불러오지 못했습니다.");
+    }
+}
+
+
+// 도/광역시를 선택하면 시·군·구 목록을 조회합니다.
+provinceSelect.addEventListener("change", async () => {
+
+    const province = provinceSelect.value;
+
+    cityCountySelect.innerHTML =
+        '<option value="">시·군·구 선택</option>';
+
+    if (!province) {
+        cityCountySelect.disabled = true;
+        return;
+    }
+
+    try {
+        const response = await fetch(
+            `/api/regions/cities?province=${encodeURIComponent(province)}`
+        );
+
+        if (!response.ok) {
+            throw new Error("시·군·구 목록 조회에 실패했습니다.");
+        }
+
+        const cities = await response.json();
+
+        cities.forEach((city) => {
+
+            const option = document.createElement("option");
+
+            option.value = city;
+            option.textContent = city;
+
+            cityCountySelect.appendChild(option);
+        });
+
+        cityCountySelect.disabled = false;
+
+    } catch (error) {
+        console.error(error);
+        alert("시·군·구 목록을 불러오지 못했습니다.");
+    }
+});
+
+
+// 날짜 버튼 클릭 처리
 dateButtons.forEach((button) => {
+
     button.addEventListener("click", () => {
 
-        // 모든 날짜 버튼의 선택 상태를 제거합니다.
         dateButtons.forEach((item) => {
             item.classList.remove("active");
         });
 
-        // 사용자가 누른 버튼만 선택 상태로 변경합니다.
         button.classList.add("active");
 
-        // data-date-type 속성에 저장된 값을 가져옵니다.
         selectedDateType = button.dataset.dateType;
 
-        // 날짜 선택 버튼이라면 임시로 날짜 선택창을 엽니다.
         if (selectedDateType === "custom") {
             openDatePicker();
         }
     });
 });
 
-// 장날 찾기 버튼을 클릭했을 때 검색 함수를 실행합니다.
+
+// 장날 찾기 버튼
 searchButton.addEventListener("click", searchMarkets);
 
-// 현재 위치 버튼을 클릭했을 때 위치 요청 함수를 실행합니다.
+
+// 현재 위치 버튼
 locationButton.addEventListener("click", searchNearbyMarkets);
 
-// 지역과 날짜 조건을 이용해 시장을 검색합니다.
-function searchMarkets() {
 
-    // 지역 검색창에 입력한 값을 가져옵니다.
-    const region = document.getElementById("region").value.trim();
+async function searchMarkets() {
 
-    // 지역을 입력하지 않았다면 안내 메시지를 보여줍니다.
-    if (region === "") {
-        alert("여행 지역을 입력해 주세요.");
+    const province = provinceSelect.value;
+    const cityCounty = cityCountySelect.value;
 
-        // 이후 검색 코드는 실행하지 않습니다.
+    if (!province) {
+        alert("도/광역시를 선택해 주세요.");
         return;
     }
 
-    // 지금은 백엔드 API가 없으므로 선택된 값을 알림창으로 확인합니다.
-    alert(
-        `${region} 지역을 '${selectedDateType}' 조건으로 검색합니다.`
+    if (!cityCounty) {
+        alert("시·군·구를 선택해 주세요.");
+        return;
+    }
+
+    const date = getSelectedDate();
+
+    if (!date) {
+        alert("방문 날짜를 선택해 주세요.");
+        return;
+    }
+
+    if (selectedDateType === "week") {
+        alert("이번 주 검색은 다음 단계에서 구현할 예정입니다.");
+        return;
+    }
+
+    try {
+
+        const url =
+            `/api/markets`
+            + `?province=${encodeURIComponent(province)}`
+            + `&cityCounty=${encodeURIComponent(cityCounty)}`
+            + `&date=${date}`;
+
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error("시장 검색에 실패했습니다.");
+        }
+
+        const markets = await response.json();
+
+        renderMarkets(markets, date);
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert("시장 정보를 불러오지 못했습니다.");
+    }
+}
+
+function renderMarkets(markets, date) {
+
+    marketList.innerHTML = "";
+
+    sectionTitle.textContent =
+        `${formatDisplayDate(date)} 열리는 장`;
+
+    if (markets.length === 0) {
+
+        marketList.innerHTML = `
+            <div class="empty-result">
+                선택한 지역과 날짜에 열리는 시장이 없어요.
+            </div>
+        `;
+
+        return;
+    }
+
+    markets.forEach((market) => {
+
+        const card = createMarketCard(market, date);
+
+        marketList.appendChild(card);
+    });
+}
+
+function createMarketCard(market, date) {
+
+    const article = document.createElement("article");
+
+    article.className = "market-card";
+
+    const isAlwaysOpen =
+        market.openingCycle === "매일";
+
+    const badgeText =
+        isAlwaysOpen
+            ? "매일 열려요"
+            : "이날 장이 열려요";
+
+    const badgeClass =
+        isAlwaysOpen
+            ? "badge-always"
+            : "badge-five-day";
+
+    const tags = createProductTags(
+        market.products,
+        market.hasParking
     );
 
-    // 나중에는 아래와 같은 API 요청으로 변경합니다.
-    // fetch(`/api/markets?region=${encodeURIComponent(region)}&dateType=${selectedDateType}`)
+    article.innerHTML = `
+        <span class="badge ${badgeClass}">
+            ${badgeText}
+        </span>
+
+        <h3>${market.name}</h3>
+
+        <p class="market-date">
+            ${formatDisplayDate(date)}
+        </p>
+
+        <p>
+            ${market.marketType} · ${market.openingCycle}
+        </p>
+
+        <p>
+            ${market.roadAddress ?? "주소 정보 없음"}
+        </p>
+
+        <div class="tags">
+            ${tags}
+        </div>
+
+        <div class="card-actions">
+            <button
+                type="button"
+                data-market-id="${market.id}"
+                class="detail-button"
+            >
+                상세보기
+            </button>
+
+            <button
+                type="button"
+                class="direction-button"
+            >
+                길찾기
+            </button>
+        </div>
+    `;
+
+    return article;
 }
 
-// 날짜 선택창을 여는 임시 함수입니다.
+function createProductTags(
+    products,
+    hasParking
+) {
+
+    const tags = [];
+
+    if (products) {
+
+        const productList =
+            products.split("+");
+
+        productList
+            .slice(0, 4)
+            .forEach((product) => {
+
+                tags.push(
+                    `<span class="tag">${product.trim()}</span>`
+                );
+            });
+    }
+
+    if (hasParking) {
+
+        tags.push(
+            `<span class="tag">주차 가능</span>`
+        );
+    }
+
+    return tags.join("");
+}
+
+function formatDisplayDate(dateString) {
+
+    const date =
+        new Date(`${dateString}T00:00:00`);
+
+    return new Intl.DateTimeFormat(
+        "ko-KR",
+        {
+            month: "long",
+            day: "numeric",
+            weekday: "long"
+        }
+    ).format(date);
+}
+
 function openDatePicker() {
 
-    // 실제 구현에서는 HTML의 input type="date"를 사용하는 것이 좋습니다.
-    alert("날짜 선택 기능은 다음 단계에서 연결할 예정입니다.");
+    customDateInput.hidden = false;
+
+    customDateInput.showPicker();
 }
 
-// 현재 위치를 이용해 주변 시장을 검색합니다.
+
 function searchNearbyMarkets() {
 
-    // 브라우저가 위치 기능을 지원하는지 확인합니다.
     if (!navigator.geolocation) {
         alert("현재 브라우저에서는 위치 기능을 사용할 수 없습니다.");
         return;
     }
 
-    // 사용자에게 위치 권한을 요청합니다.
     navigator.geolocation.getCurrentPosition(
         (position) => {
-            // 사용자의 현재 위도를 가져옵니다.
+
             const latitude = position.coords.latitude;
 
-            // 사용자의 현재 경도를 가져옵니다.
             const longitude = position.coords.longitude;
 
-            // 현재는 개발 확인을 위해 좌표를 출력합니다.
             console.log("현재 위도:", latitude);
             console.log("현재 경도:", longitude);
 
             alert("현재 위치를 확인했습니다.");
         },
+
         () => {
-            // 위치 권한을 거부하거나 위치를 가져오지 못한 경우입니다.
             alert("현재 위치를 확인할 수 없습니다.");
         }
     );
+}
+
+function getSelectedDate() {
+
+    const today = new Date();
+
+    if (selectedDateType === "today") {
+        return formatDate(today);
+    }
+
+    if (selectedDateType === "tomorrow") {
+
+        const tomorrow = new Date(today);
+
+        tomorrow.setDate(today.getDate() + 1);
+
+        return formatDate(tomorrow);
+    }
+
+    if (selectedDateType === "week") {
+
+        // 이번 주 검색은 아직 별도 API 로직이 없으므로
+        // 현재는 오늘 날짜를 기준으로 처리합니다.
+        return formatDate(today);
+    }
+
+    if (selectedDateType === "custom") {
+        return customSelectedDate;
+    }
+}
+
+function formatDate(date) {
+
+    const year = date.getFullYear();
+
+    const month = String(
+        date.getMonth() + 1
+    ).padStart(2, "0");
+
+    const day = String(
+        date.getDate()
+    ).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
 }
