@@ -161,7 +161,7 @@ public class MarketSearchService {
                                 NearbyMarketResponse::distanceKm
                         )
                 )
-
+                .limit(20)
                 .toList();
     }
 }
