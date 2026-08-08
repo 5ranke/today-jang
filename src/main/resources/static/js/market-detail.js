@@ -43,6 +43,13 @@ const lotAddress =
 const copyAddressButton =
     document.getElementById("copyAddressButton");
 
+const backButton =
+    document.getElementById("backButton");
+
+backButton.addEventListener("click", () => {
+    window.history.back();
+});
+
 loadMarketDetail();
 
 async function loadMarketDetail() {

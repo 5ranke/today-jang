@@ -1,0 +1,35 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: todayjang-postgres
+
+    environment:
+      POSTGRES_DB: todayjang
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+    restart: unless-stopped
+
+  app:
+    build: .
+    container_name: todayjang-app
+
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DB_URL: jdbc:postgresql://postgres:5432/todayjang
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+
+    ports:
+      - "127.0.0.1:8080:8080"
+
+    depends_on:
+      - postgres
+
+    restart: unless-stopped
+
+volumes:
+  postgres-data:
