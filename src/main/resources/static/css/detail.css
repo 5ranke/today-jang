@@ -129,6 +129,24 @@ body {
     background: #f7f7f5;
 }
 
+.facility-available,
+.facility-unavailable {
+    padding: 5px 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.facility-available {
+    background: #e9f6ec;
+    color: #26733a;
+}
+
+.facility-unavailable {
+    background: #fff1d6;
+    color: #8a5700;
+}
+
 .address {
     margin: 0 0 6px;
     line-height: 1.6;

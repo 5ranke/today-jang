@@ -95,11 +95,17 @@ function renderMarketDetail(market) {
     openingCycle.textContent =
         market.openingCycle ?? "-";
 
-    parkingStatus.textContent =
-        market.hasParking ? "있음" : "없음";
+    // 주차장 상태
+    setFacilityStatus(
+        parkingStatus,
+        market.hasParking
+    );
 
-    toiletStatus.textContent =
-        market.hasPublicToilet ? "있음" : "없음";
+    // 공중화장실 상태
+    setFacilityStatus(
+        toiletStatus,
+        market.hasPublicToilet
+    );
 
     renderProducts(market.products);
 
@@ -114,6 +120,23 @@ function renderMarketDetail(market) {
             : "";
 
     setupDirectionButton(market);
+}
+
+function setFacilityStatus(element, available) {
+
+    element.textContent =
+        available ? "있음" : "없음";
+
+    element.classList.remove(
+        "facility-available",
+        "facility-unavailable"
+    );
+
+    element.classList.add(
+        available
+            ? "facility-available"
+            : "facility-unavailable"
+    );
 }
 
 function getMarketId() {
