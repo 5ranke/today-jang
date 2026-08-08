@@ -276,7 +276,16 @@ function setupCopyAddressButton(market) {
         try {
             await navigator.clipboard.writeText(address);
 
-            alert("주소가 복사되었습니다.");
+            const originalText =
+                copyAddressButton.textContent;
+
+            copyAddressButton.textContent =
+                "복사됨";
+
+            setTimeout(() => {
+                copyAddressButton.textContent =
+                    originalText;
+            }, 1500);
 
         } catch (error) {
             console.error(error);

@@ -35,7 +35,8 @@
                 id="backButton"
                 class="back-button"
         >
-            ← 뒤로가기
+            <span>←</span>
+            <span>뒤로가기</span>
         </button>
 
         <a
@@ -235,12 +236,23 @@
     <p>
         오늘장은 해당 공공기관의 공식·제휴 서비스가 아닙니다.
     </p>
+
+    <p class="footer-divider">
+        © 2026 TodayJang. All rights reserved.
+        · 문의:
+        <button type="button" class="email-copy-button" id="emailCopyButton">
+            wjdtnwls0106@gmail.com
+        </button>
+        <span id="emailCopyStatus" class="email-copy-status"></span>
+    </p>
 </footer>
 
 <script
         type="module"
         src="/js/market-detail.js">
 </script>
+
+<script src="/js/common.js"></script>
 
 </body>
 

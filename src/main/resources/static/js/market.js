@@ -129,7 +129,7 @@ function createMarketCard(market, date) {
 
         <p>${market.marketType} · ${market.openingCycle}</p>
 
-        <p>${market.roadAddress ?? "주소 정보 없음"}</p>
+        <p>${market.roadAddress ?? market.lotAddress ?? "주소 정보 없음"}</p>
 
         <div class="tags">
             ${createTags(market)}
@@ -164,7 +164,7 @@ function createMarketCard(market, date) {
         card.querySelector(".copy-address-button");
 
     copyAddressButton.addEventListener("click", () => {
-        copyMarketAddress(market);
+        copyMarketAddress(market, copyAddressButton);
     });
 
     return card;
@@ -221,7 +221,7 @@ function createRangeMarketCard(market) {
         </p>
 
         <p>
-            ${market.roadAddress ?? "주소 정보 없음"}
+            ${market.roadAddress ?? market.lotAddress ?? "주소 정보 없음"}
         </p>
 
         <div class="tags">
@@ -257,7 +257,7 @@ function createRangeMarketCard(market) {
         card.querySelector(".copy-address-button");
 
     copyAddressButton.addEventListener("click", () => {
-        copyMarketAddress(market);
+        copyMarketAddress(market, copyAddressButton);
     });
 
     return card;
@@ -289,7 +289,7 @@ function createNearbyMarketCard(market) {
         </p>
 
         <p>
-            ${market.roadAddress ?? "주소 정보 없음"}
+            ${market.roadAddress ?? market.lotAddress ?? "주소 정보 없음"}
         </p>
 
         <div class="tags">
@@ -326,7 +326,7 @@ function createNearbyMarketCard(market) {
         card.querySelector(".copy-address-button");
 
     copyAddressButton.addEventListener("click", () => {
-        copyMarketAddress(market);
+        copyMarketAddress(market, copyAddressButton);
     });
 
     return card;
@@ -387,7 +387,7 @@ export function renderNearbyMarkets(
     });
 }
 
-async function copyMarketAddress(market) {
+async function copyMarketAddress(market, button) {
 
     const address =
         market.roadAddress
@@ -401,7 +401,13 @@ async function copyMarketAddress(market) {
     try {
         await navigator.clipboard.writeText(address);
 
-        alert("주소가 복사되었습니다.");
+        const originalText = button.textContent;
+
+        button.textContent = "복사됨";
+
+        setTimeout(() => {
+            button.textContent = originalText;
+        }, 1500);
 
     } catch (error) {
         console.error(error);

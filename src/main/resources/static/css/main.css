@@ -297,11 +297,22 @@ button:hover {
     margin-top: 16px;
 }
 
-/* 카드 내부 버튼 디자인입니다. */
+/* 카드 내부 버튼 공통 디자인 */
 .card-actions button {
     padding: 11px;
-    background: #f1f1ef;
     font-weight: 700;
+}
+
+/* 상세보기 버튼 */
+.detail-button {
+    background: #f1f1ef;
+}
+
+/* 주소 복사 버튼 */
+.copy-address-button {
+    background: #fff;
+    color: #222;
+    border: 1px solid #ddd !important;
 }
 
 .footer {
@@ -320,6 +331,22 @@ button:hover {
 
 .footer a {
     color: #555;
+}
+
+.email-copy-button {
+    padding: 0;
+    border: none;
+    background: none;
+    color: #555;
+    font: inherit;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.email-copy-status {
+    margin-left: 6px;
+    color: #888;
+    font-size: 11px;
 }
 
 @media (max-width: 520px) {
