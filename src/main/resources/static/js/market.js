@@ -113,11 +113,34 @@ function createMarketCard(market, date) {
         <div class="tags">
             ${createTags(market)}
         </div>
+
+        <div class="card-actions">
+            <button
+                type="button"
+                class="detail-button"
+            >
+                상세보기
+            </button>
+
+            <button
+                type="button"
+                class="direction-button"
+            >
+                길찾기
+            </button>
+        </div>
     `;
+
+    const detailButton =
+        card.querySelector(".detail-button");
+
+    detailButton.addEventListener("click", () => {
+        window.location.href =
+            `/market-detail.html?id=${market.id}`;
+    });
 
     return card;
 }
-
 
 function createTags(market) {
 
@@ -176,7 +199,31 @@ function createRangeMarketCard(market) {
         <div class="tags">
             ${createTags(market)}
         </div>
+
+        <div class="card-actions">
+            <button
+                type="button"
+                class="detail-button"
+            >
+                상세보기
+            </button>
+
+            <button
+                type="button"
+                class="direction-button"
+            >
+                길찾기
+            </button>
+        </div>
     `;
+
+    const detailButton =
+        card.querySelector(".detail-button");
+
+    detailButton.addEventListener("click", () => {
+        window.location.href =
+            `/market-detail.html?id=${market.id}`;
+    });
 
     return card;
 }

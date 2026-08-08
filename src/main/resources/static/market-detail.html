@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>시장 상세 | 오늘장</title>
+
+    <link
+            rel="icon"
+            type="image/png"
+            href="/images/favicon.png"
+    >
+
+    <link
+            rel="stylesheet"
+            href="/css/detail.css"
+    >
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- 상단 영역 -->
+    <header class="detail-header">
+
+        <a
+                href="/"
+                class="back-button"
+        >
+            ← 돌아가기
+        </a>
+
+        <a
+                href="/"
+                class="logo"
+        >
+            <img
+                    src="/images/logo.png"
+                    alt="오늘장 로고"
+                    class="logo-image"
+            >
+
+            <span>오늘장</span>
+        </a>
+
+    </header>
+
+
+    <!-- 시장 기본 정보 -->
+    <main id="marketDetail">
+
+        <section class="market-heading">
+
+            <span
+                    id="marketTypeBadge"
+                    class="badge"
+            >
+            </span>
+
+            <h1 id="marketName">
+                시장 정보를 불러오는 중입니다.
+            </h1>
+
+            <p id="marketAddress">
+            </p>
+
+        </section>
+
+
+        <!-- 장날 정보 -->
+        <section class="detail-card">
+
+            <h2>장 운영 정보</h2>
+
+            <div class="info-row">
+                <span class="info-label">시장 유형</span>
+                <span id="marketType">-</span>
+            </div>
+
+            <div class="info-row">
+                <span class="info-label">장날</span>
+                <span id="openingCycle">-</span>
+            </div>
+
+        </section>
+
+
+        <!-- 취급 품목 -->
+        <section class="detail-card">
+
+            <h2>취급 품목</h2>
+
+            <div
+                    id="productTags"
+                    class="tags"
+            >
+            </div>
+
+        </section>
+
+
+        <!-- 편의시설 -->
+        <section class="detail-card">
+
+            <h2>편의시설</h2>
+
+            <div class="facility-list">
+
+                <div class="facility-item">
+                    <span>주차장</span>
+                    <strong id="parkingStatus">-</strong>
+                </div>
+
+                <div class="facility-item">
+                    <span>공중화장실</span>
+                    <strong id="toiletStatus">-</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- 시장 상세 정보 -->
+        <section class="detail-card">
+
+            <h2>시장 정보</h2>
+
+            <div
+                    id="storeCountRow"
+                    class="info-row"
+            >
+                <span class="info-label">점포 수</span>
+                <span id="storeCount">-</span>
+            </div>
+
+            <div
+                    id="establishedYearRow"
+                    class="info-row"
+            >
+                <span class="info-label">개설 연도</span>
+                <span id="establishedYear">-</span>
+            </div>
+
+            <div
+                    id="phoneRow"
+                    class="info-row"
+            >
+                <span class="info-label">전화번호</span>
+
+                <a
+                        id="phoneNumber"
+                        href="#"
+                >
+                </a>
+            </div>
+
+            <div
+                    id="homepageRow"
+                    class="info-row"
+            >
+                <span class="info-label">홈페이지</span>
+
+                <a
+                        id="homepageUrl"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                >
+                    바로가기
+                </a>
+            </div>
+
+        </section>
+
+
+        <!-- 주소 -->
+        <section class="detail-card">
+
+            <h2>위치</h2>
+
+            <p
+                    id="roadAddress"
+                    class="address"
+            >
+            </p>
+
+            <p
+                    id="lotAddress"
+                    class="sub-address"
+            >
+            </p>
+
+        </section>
+
+
+        <!-- 하단 버튼 -->
+        <div class="detail-actions">
+
+            <button
+                    type="button"
+                    id="directionButton"
+                    class="primary-button"
+            >
+                길찾기
+            </button>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script
+        type="module"
+        src="/js/market-detail.js">
+</script>
+
+</body>
+
+</html>
