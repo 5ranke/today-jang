@@ -6,8 +6,10 @@ import {
 import {
     searchMarketsApi,
     searchMarketsByRangeApi,
+    searchNearbyMarketsApi,
     renderMarkets,
     renderRangeMarkets,
+    renderNearbyMarkets,
     formatDisplayDate
 } from "./market.js";
 
@@ -20,6 +22,9 @@ const dateButtons =
 
 const searchButton =
     document.getElementById("searchButton");
+
+const locationButton =
+    document.getElementById("locationButton");
 
 const marketList =
     document.getElementById("marketList");
@@ -196,6 +201,11 @@ searchButton.addEventListener("click", async () => {
     }
 });
 
+locationButton.addEventListener(
+    "click",
+    searchNearbyMarkets
+);
+
 
 function getSelectedDate() {
 
@@ -268,4 +278,59 @@ function getThisWeekRange() {
         startDate: formatDate(today),
         endDate: formatDate(endDate)
     };
+}
+
+function searchNearbyMarkets() {
+
+    if (!navigator.geolocation) {
+        alert(
+            "현재 브라우저에서는 위치 기능을 사용할 수 없습니다."
+        );
+        return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+
+        async (position) => {
+
+            const latitude =
+                position.coords.latitude;
+
+            const longitude =
+                position.coords.longitude;
+
+            const today =
+                formatDate(new Date());
+
+            try {
+
+                const markets =
+                    await searchNearbyMarketsApi(
+                        latitude,
+                        longitude,
+                        today
+                    );
+
+                renderNearbyMarkets(
+                    markets,
+                    marketList,
+                    sectionTitle
+                );
+
+            } catch (error) {
+
+                console.error(error);
+
+                alert(
+                    "주변 시장 정보를 불러오지 못했습니다."
+                );
+            }
+        },
+
+        () => {
+            alert(
+                "현재 위치를 확인할 수 없습니다. 위치 권한을 확인해 주세요."
+            );
+        }
+    );
 }

@@ -267,6 +267,12 @@ button:hover {
     font-weight: 700;
 }
 
+.market-distance {
+    color: #26733a !important;
+    font-size: 15px !important;
+    font-weight: 700;
+}
+
 /* 시장의 판매 품목과 편의시설 태그 영역입니다. */
 .tags {
     display: flex;
