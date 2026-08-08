@@ -133,13 +133,22 @@ input:focus {
 }
 
 .custom-date-input {
+    display: block;
     width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
     margin: 8px 0 4px;
     padding: 12px 14px;
+
     border: 1px solid #ddd;
     border-radius: 12px;
+
     background: #fff;
+    color: #222;
+
     font-size: 15px;
+    font-family: inherit;
 }
 
 .custom-date-input:focus {
@@ -155,6 +164,9 @@ input:focus {
     border-radius: 12px;
     cursor: pointer;
     font-size: 15px;
+
+    font-family: inherit;
+    color: #222;
 }
 
 /* 날짜 선택 버튼입니다. */
@@ -306,6 +318,7 @@ button:hover {
 /* 상세보기 버튼 */
 .detail-button {
     background: #f1f1ef;
+    color: #222;
 }
 
 /* 주소 복사 버튼 */

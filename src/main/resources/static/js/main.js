@@ -110,16 +110,8 @@ dateButtons.forEach(button => {
         selectedDateType = button.dataset.dateType;
 
         if (selectedDateType === "custom") {
-
             customDateInput.hidden = false;
-
-            // 지원되는 브라우저라면 달력창을 바로 엽니다.
-            if (customDateInput.showPicker) {
-                customDateInput.showPicker();
-            }
-
         } else {
-
             customDateInput.hidden = true;
         }
     });
