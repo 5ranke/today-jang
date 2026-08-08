@@ -29,7 +29,9 @@
             height: 900px;
 
             margin: 0 auto;
-            padding: 70px 90px;
+
+            /* 기존 70px 90px → 위쪽과 좌우 여백 증가 */
+            padding: 92px 125px 70px;
 
             overflow: hidden;
             position: relative;
@@ -53,22 +55,22 @@
             justify-content: space-between;
             align-items: center;
 
-            margin-bottom: 55px;
+            /* 기존보다 본문과의 간격도 살짝 조정 */
+            margin-bottom: 45px;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 11px;
 
-            font-size: 23px;
+            font-size: 24px;
             font-weight: 800;
         }
 
         .logo img {
-            width: 42px;
-            height: 42px;
-
+            width: 46px;
+            height: 46px;
             object-fit: contain;
         }
 
@@ -89,9 +91,11 @@
         /* 메인 영역 */
         .hero {
             display: grid;
+
             grid-template-columns: 1.15fr 0.85fr;
 
-            gap: 80px;
+            /* 기존 80px */
+            gap: 60px;
 
             align-items: center;
         }
