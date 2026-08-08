@@ -1,11 +1,14 @@
 package com.sujin.todayjang.market.repository;
 
-import com.sujin.todayjang.market.domain.Market; // Market Entity입니다.
-import org.springframework.data.jpa.repository.JpaRepository; // 기본 CRUD 기능을 제공합니다.
+import com.sujin.todayjang.market.domain.Market;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface MarketRepository
-        extends JpaRepository<Market, Long> {
+import java.util.List;
 
-    // 지금은 아무 코드를 작성하지 않아도 됩니다.
-    // save(), count(), findAll() 등을 자동으로 사용할 수 있습니다.
+public interface MarketRepository extends JpaRepository<Market, Long> {
+
+    List<Market> findByProvinceAndCityCounty(
+            String province,
+            String cityCounty
+    );
 }

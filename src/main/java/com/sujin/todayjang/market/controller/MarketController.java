@@ -1,0 +1,44 @@
+package com.sujin.todayjang.market.controller;
+
+import com.sujin.todayjang.market.dto.MarketSearchResponse;
+import com.sujin.todayjang.market.service.MarketSearchService;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.time.LocalDate;
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/markets")
+public class MarketController {
+
+    private final MarketSearchService marketSearchService;
+
+    public MarketController(
+            MarketSearchService marketSearchService
+    ) {
+        this.marketSearchService = marketSearchService;
+    }
+
+    @GetMapping
+    public List<MarketSearchResponse> searchMarkets(
+
+            @RequestParam String province,
+
+            @RequestParam String cityCounty,
+
+            @RequestParam
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            LocalDate date
+    ) {
+
+        return marketSearchService.search(
+                province,
+                cityCounty,
+                date
+        );
+    }
+}
