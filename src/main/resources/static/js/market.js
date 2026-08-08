@@ -145,9 +145,9 @@ function createMarketCard(market, date) {
 
             <button
                 type="button"
-                class="direction-button"
+                class="copy-address-button"
             >
-                길찾기
+                주소 복사
             </button>
         </div>
     `;
@@ -158,6 +158,13 @@ function createMarketCard(market, date) {
     detailButton.addEventListener("click", () => {
         window.location.href =
             `/market-detail.html?id=${market.id}`;
+    });
+
+    const copyAddressButton =
+        card.querySelector(".copy-address-button");
+
+    copyAddressButton.addEventListener("click", () => {
+        copyMarketAddress(market);
     });
 
     return card;
@@ -231,9 +238,9 @@ function createRangeMarketCard(market) {
 
             <button
                 type="button"
-                class="direction-button"
+                class="copy-address-button"
             >
-                길찾기
+                주소 복사
             </button>
         </div>
     `;
@@ -244,6 +251,13 @@ function createRangeMarketCard(market) {
     detailButton.addEventListener("click", () => {
         window.location.href =
             `/market-detail.html?id=${market.id}`;
+    });
+
+    const copyAddressButton =
+        card.querySelector(".copy-address-button");
+
+    copyAddressButton.addEventListener("click", () => {
+        copyMarketAddress(market);
     });
 
     return card;
@@ -292,9 +306,9 @@ function createNearbyMarketCard(market) {
 
             <button
                 type="button"
-                class="direction-button"
+                class="copy-address-button"
             >
-                길찾기
+                주소 복사
             </button>
         </div>
     `;
@@ -306,6 +320,13 @@ function createNearbyMarketCard(market) {
 
         window.location.href =
             `/market-detail.html?id=${market.id}`;
+    });
+
+    const copyAddressButton =
+        card.querySelector(".copy-address-button");
+
+    copyAddressButton.addEventListener("click", () => {
+        copyMarketAddress(market);
     });
 
     return card;
@@ -364,4 +385,27 @@ export function renderNearbyMarkets(
 
         marketList.appendChild(card);
     });
+}
+
+async function copyMarketAddress(market) {
+
+    const address =
+        market.roadAddress
+        ?? market.lotAddress;
+
+    if (!address) {
+        alert("복사할 주소 정보가 없습니다.");
+        return;
+    }
+
+    try {
+        await navigator.clipboard.writeText(address);
+
+        alert("주소가 복사되었습니다.");
+
+    } catch (error) {
+        console.error(error);
+
+        alert("주소를 복사하지 못했습니다.");
+    }
 }

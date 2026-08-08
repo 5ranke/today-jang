@@ -40,8 +40,8 @@ const roadAddress =
 const lotAddress =
     document.getElementById("lotAddress");
 
-const directionButton =
-    document.getElementById("directionButton");
+const copyAddressButton =
+    document.getElementById("copyAddressButton");
 
 loadMarketDetail();
 
@@ -119,7 +119,7 @@ function renderMarketDetail(market) {
             ? `지번 ${market.lotAddress}`
             : "";
 
-    setupDirectionButton(market);
+    setupCopyAddressButton(market);
 }
 
 function setFacilityStatus(element, available) {
@@ -252,34 +252,31 @@ function renderOptionalInfo(market) {
     }
 }
 
-function setupDirectionButton(market) {
+function setupCopyAddressButton(market) {
 
-    if (
-        market.latitude == null
-        || market.longitude == null
-    ) {
-        directionButton.disabled = true;
-        directionButton.textContent =
-            "위치 정보 없음";
+    const address =
+        market.roadAddress
+        ?? market.lotAddress;
 
+    if (!address) {
+        copyAddressButton.disabled = true;
+        copyAddressButton.textContent = "주소 정보 없음";
         return;
     }
 
-    directionButton.addEventListener(
-        "click",
-        () => {
+    copyAddressButton.addEventListener("click", async () => {
 
-            console.log(
-                "시장 위치:",
-                market.latitude,
-                market.longitude
-            );
+        try {
+            await navigator.clipboard.writeText(address);
 
-            alert(
-                "길찾기 기능은 지도 연동 단계에서 연결할 예정입니다."
-            );
+            alert("주소가 복사되었습니다.");
+
+        } catch (error) {
+            console.error(error);
+
+            alert("주소를 복사하지 못했습니다.");
         }
-    );
+    });
 }
 
 function showError(message) {

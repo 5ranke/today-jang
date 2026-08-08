@@ -289,7 +289,7 @@ button:hover {
     font-size: 12px;
 }
 
-/* 상세보기와 길찾기 버튼을 나란히 배치합니다. */
+/* 상세보기와 주소 복사 버튼을 나란히 배치합니다. */
 .card-actions {
     display: grid;
     grid-template-columns: 1fr 1fr;
