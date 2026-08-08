@@ -137,6 +137,7 @@ input:focus {
     width: 100%;
     max-width: 100%;
     min-width: 0;
+    box-sizing: border-box;
 
     margin: 8px 0 4px;
     padding: 12px 14px;
@@ -149,6 +150,19 @@ input:focus {
 
     font-size: 15px;
     font-family: inherit;
+}
+
+/* hidden 속성이 있으면 반드시 숨김 */
+.custom-date-input[hidden] {
+    display: none !important;
+}
+
+/* iPhone Safari / Chrome의 date input 너비 보정 */
+@supports (-webkit-touch-callout: none) {
+    .custom-date-input {
+        width: -webkit-fill-available;
+        max-width: -webkit-fill-available;
+    }
 }
 
 .custom-date-input:focus {
