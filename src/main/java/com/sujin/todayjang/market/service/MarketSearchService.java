@@ -1,6 +1,7 @@
 package com.sujin.todayjang.market.service;
 
 import com.sujin.todayjang.market.domain.Market;
+import com.sujin.todayjang.market.dto.MarketDetailResponse;
 import com.sujin.todayjang.market.dto.MarketRangeSearchResponse;
 import com.sujin.todayjang.market.dto.MarketSearchResponse;
 import com.sujin.todayjang.market.repository.MarketRepository;
@@ -90,5 +91,15 @@ public class MarketSearchService {
                 })
                 .filter(response -> response != null)
                 .toList();
+    }
+
+    public MarketDetailResponse getMarket(Long id) {
+
+        Market market = marketRepository.findById(id)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("존재하지 않는 시장입니다.")
+                );
+
+        return MarketDetailResponse.from(market);
     }
 }

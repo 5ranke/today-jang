@@ -1,13 +1,11 @@
 package com.sujin.todayjang.market.controller;
 
+import com.sujin.todayjang.market.dto.MarketDetailResponse;
 import com.sujin.todayjang.market.dto.MarketRangeSearchResponse;
 import com.sujin.todayjang.market.dto.MarketSearchResponse;
 import com.sujin.todayjang.market.service.MarketSearchService;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -65,5 +63,12 @@ public class MarketController {
                 startDate,
                 endDate
         );
+    }
+
+    @GetMapping("/{id}")
+    public MarketDetailResponse getMarket(
+            @PathVariable Long id
+    ) {
+        return marketSearchService.getMarket(id);
     }
 }
