@@ -1,5 +1,6 @@
 package com.sujin.todayjang.market.controller;
 
+import com.sujin.todayjang.market.dto.MarketRangeSearchResponse;
 import com.sujin.todayjang.market.dto.MarketSearchResponse;
 import com.sujin.todayjang.market.service.MarketSearchService;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -39,6 +40,30 @@ public class MarketController {
                 province,
                 cityCounty,
                 date
+        );
+    }
+
+    @GetMapping("/range")
+    public List<MarketRangeSearchResponse> searchMarketsByRange(
+
+            @RequestParam String province,
+
+            @RequestParam String cityCounty,
+
+            @RequestParam
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            LocalDate startDate,
+
+            @RequestParam
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            LocalDate endDate
+    ) {
+
+        return marketSearchService.searchRange(
+                province,
+                cityCounty,
+                startDate,
+                endDate
         );
     }
 }

@@ -5,7 +5,10 @@ import {
 
 import {
     searchMarketsApi,
-    renderMarkets
+    searchMarketsByRangeApi,
+    renderMarkets,
+    renderRangeMarkets,
+    formatDisplayDate
 } from "./market.js";
 
 
@@ -21,7 +24,15 @@ const searchButton =
 const marketList =
     document.getElementById("marketList");
 
+const customDateInput =
+    document.getElementById("customDate");
+
+const sectionTitle =
+    document.querySelector(".section-title");
+
 let selectedDateType = "today";
+
+let customSelectedDate = null;
 
 
 initialize();
@@ -92,13 +103,34 @@ dateButtons.forEach(button => {
         button.classList.add("active");
 
         selectedDateType = button.dataset.dateType;
+
+        if (selectedDateType === "custom") {
+
+            customDateInput.hidden = false;
+
+            // 지원되는 브라우저라면 달력창을 바로 엽니다.
+            if (customDateInput.showPicker) {
+                customDateInput.showPicker();
+            }
+
+        } else {
+
+            customDateInput.hidden = true;
+        }
     });
+});
+
+customDateInput.addEventListener("change", () => {
+
+    customSelectedDate =
+        customDateInput.value;
 });
 
 
 searchButton.addEventListener("click", async () => {
 
     const province = provinceSelect.value;
+
     const cityCounty = cityCountySelect.value;
 
     if (!province || !cityCounty) {
@@ -106,19 +138,46 @@ searchButton.addEventListener("click", async () => {
         return;
     }
 
-    const date = getSelectedDate();
-
-    if (!date) {
-        alert("방문 날짜를 선택해 주세요.");
-        return;
-    }
-
     try {
-        const markets = await searchMarketsApi(
-            province,
-            cityCounty,
-            date
-        );
+
+        // 이번 주 검색
+        if (selectedDateType === "week") {
+
+            const { startDate, endDate } =
+                getThisWeekRange();
+
+            const markets =
+                await searchMarketsByRangeApi(
+                    province,
+                    cityCounty,
+                    startDate,
+                    endDate
+                );
+
+            renderRangeMarkets(
+                markets,
+                marketList,
+                sectionTitle
+            );
+
+            return;
+        }
+
+
+        // 오늘 / 내일 / 날짜 선택 검색
+        const date = getSelectedDate();
+
+        if (!date) {
+            alert("방문 날짜를 선택해 주세요.");
+            return;
+        }
+
+        const markets =
+            await searchMarketsApi(
+                province,
+                cityCounty,
+                date
+            );
 
         renderMarkets(
             markets,
@@ -126,8 +185,13 @@ searchButton.addEventListener("click", async () => {
             marketList
         );
 
+        sectionTitle.textContent =
+            `${formatDisplayDate(date)} 열리는 장`;
+
     } catch (error) {
+
         console.error(error);
+
         alert("시장 정보를 불러오지 못했습니다.");
     }
 });
@@ -145,9 +209,15 @@ function getSelectedDate() {
 
         const tomorrow = new Date(today);
 
-        tomorrow.setDate(today.getDate() + 1);
+        tomorrow.setDate(
+            today.getDate() + 1
+        );
 
         return formatDate(tomorrow);
+    }
+
+    if (selectedDateType === "custom") {
+        return customSelectedDate;
     }
 
     return null;
@@ -165,4 +235,37 @@ function formatDate(date) {
         String(date.getDate()).padStart(2, "0");
 
     return `${year}-${month}-${day}`;
+}
+
+function getThisWeekRange() {
+
+    const today = new Date();
+
+    const endDate = new Date(today);
+
+    /*
+     * getDay()
+     *
+     * 일요일 = 0
+     * 월요일 = 1
+     * ...
+     * 토요일 = 6
+     */
+
+    const dayOfWeek = today.getDay();
+
+    // 오늘부터 일요일까지 남은 날짜 수입니다.
+    const daysUntilSunday =
+        dayOfWeek === 0
+            ? 0
+            : 7 - dayOfWeek;
+
+    endDate.setDate(
+        today.getDate() + daysUntilSunday
+    );
+
+    return {
+        startDate: formatDate(today),
+        endDate: formatDate(endDate)
+    };
 }

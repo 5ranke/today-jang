@@ -132,6 +132,20 @@ input:focus {
     margin: 12px 0;
 }
 
+.custom-date-input {
+    width: 100%;
+    margin: 8px 0 4px;
+    padding: 12px 14px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    background: #fff;
+    font-size: 15px;
+}
+
+.custom-date-input:focus {
+    border-color: #555;
+}
+
 /* 모든 버튼에 공통으로 적용되는 디자인입니다. */
 .date-buttons button,
 .primary-button,
