@@ -1,0 +1,37 @@
+package com.sujin.todayjang.market.dto;
+
+import com.sujin.todayjang.market.domain.Market;
+
+public record NearbyMarketResponse(
+        Long id,
+        String name,
+        String marketType,
+        String province,
+        String cityCounty,
+        String roadAddress,
+        String openingCycle,
+        String products,
+        Boolean hasParking,
+        Boolean hasPublicToilet,
+        Double distanceKm
+) {
+
+    public static NearbyMarketResponse from(
+            Market market,
+            double distanceKm
+    ) {
+        return new NearbyMarketResponse(
+                market.getId(),
+                market.getName(),
+                market.getMarketType(),
+                market.getProvince(),
+                market.getCityCounty(),
+                market.getRoadAddress(),
+                market.getOpeningCycle(),
+                market.getProducts(),
+                market.getHasParking(),
+                market.getHasPublicToilet(),
+                distanceKm
+        );
+    }
+}

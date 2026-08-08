@@ -3,6 +3,7 @@ package com.sujin.todayjang.market.controller;
 import com.sujin.todayjang.market.dto.MarketDetailResponse;
 import com.sujin.todayjang.market.dto.MarketRangeSearchResponse;
 import com.sujin.todayjang.market.dto.MarketSearchResponse;
+import com.sujin.todayjang.market.dto.NearbyMarketResponse;
 import com.sujin.todayjang.market.service.MarketSearchService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
@@ -70,5 +71,24 @@ public class MarketController {
             @PathVariable Long id
     ) {
         return marketSearchService.getMarket(id);
+    }
+
+    @GetMapping("/nearby")
+    public List<NearbyMarketResponse> searchNearbyMarkets(
+
+            @RequestParam double latitude,
+
+            @RequestParam double longitude,
+
+            @RequestParam
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            LocalDate date
+    ) {
+
+        return marketSearchService.searchNearby(
+                latitude,
+                longitude,
+                date
+        );
     }
 }
