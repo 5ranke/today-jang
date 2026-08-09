@@ -33,15 +33,11 @@ public class MarketSearchService {
 
     public List<MarketSearchResponse> search(
             String province,
-            String cityCounty,
             LocalDate date
     ) {
 
         List<Market> markets =
-                marketRepository.findByProvinceAndCityCounty(
-                        province,
-                        cityCounty
-                );
+                marketRepository.findByProvince(province);
 
         return markets.stream()
                 .filter(market ->
@@ -56,7 +52,6 @@ public class MarketSearchService {
 
     public List<MarketRangeSearchResponse> searchRange(
             String province,
-            String cityCounty,
             LocalDate startDate,
             LocalDate endDate
     ) {
@@ -68,10 +63,7 @@ public class MarketSearchService {
         }
 
         List<Market> markets =
-                marketRepository.findByProvinceAndCityCounty(
-                        province,
-                        cityCounty
-                );
+                marketRepository.findByProvince(province);
 
         return markets.stream()
                 .map(market -> {

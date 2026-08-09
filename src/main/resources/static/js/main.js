@@ -1,7 +1,4 @@
-import {
-    loadProvinces,
-    loadCities
-} from "./region.js";
+import { loadProvinces } from "./region.js";
 
 import {
     searchMarketsApi,
@@ -15,7 +12,6 @@ import {
 
 
 const provinceSelect = document.getElementById("province");
-const cityCountySelect = document.getElementById("cityCounty");
 
 const dateButtons =
     document.querySelectorAll(".date-buttons button");
@@ -64,39 +60,6 @@ async function initialize() {
 }
 
 
-provinceSelect.addEventListener("change", async () => {
-
-    const province = provinceSelect.value;
-
-    cityCountySelect.innerHTML =
-        '<option value="">시·군·구 선택</option>';
-
-    if (!province) {
-        cityCountySelect.disabled = true;
-        return;
-    }
-
-    try {
-        const cities = await loadCities(province);
-
-        cities.forEach(city => {
-
-            const option = document.createElement("option");
-
-            option.value = city;
-            option.textContent = city;
-
-            cityCountySelect.appendChild(option);
-        });
-
-        cityCountySelect.disabled = false;
-
-    } catch (error) {
-        console.error(error);
-    }
-});
-
-
 dateButtons.forEach(button => {
 
     button.addEventListener("click", () => {
@@ -128,9 +91,7 @@ searchButton.addEventListener("click", async () => {
 
     const province = provinceSelect.value;
 
-    const cityCounty = cityCountySelect.value;
-
-    if (!province || !cityCounty) {
+    if (!province) {
         alert("여행 지역을 선택해 주세요.");
         return;
     }
@@ -146,7 +107,6 @@ searchButton.addEventListener("click", async () => {
             const markets =
                 await searchMarketsByRangeApi(
                     province,
-                    cityCounty,
                     startDate,
                     endDate
                 );
@@ -172,7 +132,6 @@ searchButton.addEventListener("click", async () => {
         const markets =
             await searchMarketsApi(
                 province,
-                cityCounty,
                 date
             );
 

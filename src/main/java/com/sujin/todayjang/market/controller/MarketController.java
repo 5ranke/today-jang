@@ -28,8 +28,6 @@ public class MarketController {
 
             @RequestParam String province,
 
-            @RequestParam String cityCounty,
-
             @RequestParam
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
             LocalDate date
@@ -37,7 +35,6 @@ public class MarketController {
 
         return marketSearchService.search(
                 province,
-                cityCounty,
                 date
         );
     }
@@ -46,8 +43,6 @@ public class MarketController {
     public List<MarketRangeSearchResponse> searchMarketsByRange(
 
             @RequestParam String province,
-
-            @RequestParam String cityCounty,
 
             @RequestParam
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
@@ -60,7 +55,6 @@ public class MarketController {
 
         return marketSearchService.searchRange(
                 province,
-                cityCounty,
                 startDate,
                 endDate
         );

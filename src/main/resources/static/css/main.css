@@ -92,14 +92,12 @@ input:focus {
     border-color: #555;
 }
 
-/* 지역 선택창을 나란히 배치합니다. */
+/* 지역 선택창입니다. */
 .region-selects {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
+    width: 100%;
 }
 
-/* 도/광역시, 시·군·구 선택창입니다. */
+/* 도/광역시 선택창입니다. */
 .region-selects select {
     width: 100%;
     padding: 14px;
@@ -115,13 +113,6 @@ input:focus {
 /* 지역 선택창을 눌렀을 때 테두리를 강조합니다. */
 .region-selects select:focus {
     border-color: #555;
-}
-
-/* 아직 선택할 수 없는 시·군·구 목록입니다. */
-.region-selects select:disabled {
-    background: #f5f5f3;
-    color: #aaa;
-    cursor: not-allowed;
 }
 
 /* 날짜 선택 버튼을 격자 형태로 배치합니다. */
@@ -386,8 +377,4 @@ button:hover {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    /* 모바일에서는 지역 선택창을 세로로 배치합니다. */
-    .region-selects {
-        grid-template-columns: 1fr;
-    }
 }

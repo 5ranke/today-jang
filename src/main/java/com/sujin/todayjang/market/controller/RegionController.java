@@ -3,7 +3,6 @@ package com.sujin.todayjang.market.controller;
 import com.sujin.todayjang.market.service.RegionService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -21,12 +20,5 @@ public class RegionController {
     @GetMapping("/provinces")
     public List<String> getProvinces() {
         return regionService.getProvinces();
-    }
-
-    @GetMapping("/cities")
-    public List<String> getCityCounties(
-            @RequestParam String province
-    ) {
-        return regionService.getCityCounties(province);
     }
 }

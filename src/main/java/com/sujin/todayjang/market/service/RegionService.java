@@ -17,8 +17,4 @@ public class RegionService {
     public List<String> getProvinces() {
         return marketRepository.findDistinctProvinces();
     }
-
-    public List<String> getCityCounties(String province) {
-        return marketRepository.findDistinctCityCountiesByProvince(province);
-    }
 }
