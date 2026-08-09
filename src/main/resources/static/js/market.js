@@ -16,29 +16,6 @@ export async function searchMarketsApi(province, marketType, date) {
     return response.json();
 }
 
-export async function searchMarketsByRangeApi(
-    province,
-    marketType,
-    startDate,
-    endDate
-) {
-
-    const url =
-        `/api/markets/range`
-        + `?province=${encodeURIComponent(province)}`
-        + `&marketType=${encodeURIComponent(marketType)}`
-        + `&startDate=${startDate}`
-        + `&endDate=${endDate}`;
-
-    const response = await fetch(url);
-
-    if (!response.ok) {
-        throw new Error("기간별 시장 검색에 실패했습니다.");
-    }
-
-    return response.json();
-}
-
 export async function searchNearbyMarketsApi(
     latitude,
     longitude,
@@ -76,35 +53,6 @@ export function renderMarkets(markets, date, marketList) {
 
     markets.forEach((market) => {
         marketList.appendChild(createMarketCard(market, date));
-    });
-}
-
-export function renderRangeMarkets(
-    markets,
-    marketList,
-    sectionTitle
-) {
-
-    marketList.innerHTML = "";
-
-    sectionTitle.textContent = "이번 주 열리는 장";
-
-    if (markets.length === 0) {
-
-        marketList.innerHTML = `
-            <div class="empty-result">
-                이번 주에 열리는 시장이 없어요.
-            </div>
-        `;
-
-        return;
-    }
-
-    markets.forEach((market) => {
-
-        const card = createRangeMarketCard(market);
-
-        marketList.appendChild(card);
     });
 }
 
@@ -190,77 +138,6 @@ function createTags(market) {
     }
 
     return tags.join("");
-}
-
-function createRangeMarketCard(market) {
-
-    const card = document.createElement("article");
-
-    card.className = "market-card";
-
-    const isAlwaysOpen =
-        market.openingCycle === "매일";
-
-    const dates = market.openDates
-        .map(formatDisplayDate)
-        .join(", ");
-
-    card.innerHTML = `
-        <span class="badge ${isAlwaysOpen ? "badge-always" : "badge-five-day"}">
-            ${isAlwaysOpen ? "매일 열려요" : "이번 주 장날"}
-        </span>
-
-        <h3>${market.name}</h3>
-
-        <p class="market-date">
-            ${isAlwaysOpen ? "이번 주 매일 방문 가능" : dates}
-        </p>
-
-        <p>
-            ${market.marketType} · ${market.openingCycle}
-        </p>
-
-        <p>
-            ${market.roadAddress ?? market.lotAddress ?? "주소 정보 없음"}
-        </p>
-
-        <div class="tags">
-            ${createTags(market)}
-        </div>
-
-        <div class="card-actions">
-            <button
-                type="button"
-                class="detail-button"
-            >
-                상세보기
-            </button>
-
-            <button
-                type="button"
-                class="copy-address-button"
-            >
-                주소 복사
-            </button>
-        </div>
-    `;
-
-    const detailButton =
-        card.querySelector(".detail-button");
-
-    detailButton.addEventListener("click", () => {
-        window.location.href =
-            `/market-detail.html?id=${market.id}`;
-    });
-
-    const copyAddressButton =
-        card.querySelector(".copy-address-button");
-
-    copyAddressButton.addEventListener("click", () => {
-        copyMarketAddress(market, copyAddressButton);
-    });
-
-    return card;
 }
 
 function createNearbyMarketCard(market) {

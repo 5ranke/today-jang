@@ -50,18 +50,7 @@
   <!-- 검색 조건을 입력하는 영역입니다. -->
   <section class="search-box">
 
-    <label for="province">여행 지역</label>
-
-    <div class="region-selects">
-
-      <!-- 도/광역시 선택 -->
-      <select id="province">
-        <option value="">도/광역시 선택</option>
-      </select>
-
-    </div>
-
-    <label class="market-type-label">시장 유형</label>
+    <label>시장 유형</label>
 
     <div class="market-type-buttons">
       <button type="button" class="active" data-market-type="five-day">
@@ -82,14 +71,6 @@
         오늘
       </button>
 
-      <button type="button" data-date-type="tomorrow">
-        내일
-      </button>
-
-      <button type="button" data-date-type="week">
-        이번 주
-      </button>
-
       <button type="button" data-date-type="custom">
         날짜 선택
       </button>
@@ -102,14 +83,23 @@
             hidden
     />
 
-    <!-- 지역과 날짜 조건으로 시장을 검색합니다. -->
-    <button
-            type="button"
-            id="searchButton"
-            class="primary-button"
-    >
-      장날 찾기
-    </button>
+    <label class="region-label" for="province">여행 지역</label>
+
+    <div class="region-search-row">
+      <!-- 도/광역시 선택 -->
+      <select id="province">
+        <option value="">도/광역시 선택</option>
+      </select>
+
+      <!-- 지역과 날짜 조건으로 시장을 검색합니다. -->
+      <button
+              type="button"
+              id="searchButton"
+              class="primary-button"
+      >
+        장날 찾기
+      </button>
+    </div>
 
     <!-- 현재 위치를 이용해 주변 시장을 검색합니다. -->
     <button

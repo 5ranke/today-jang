@@ -1,7 +1,6 @@
 package com.sujin.todayjang.market.controller;
 
 import com.sujin.todayjang.market.dto.MarketDetailResponse;
-import com.sujin.todayjang.market.dto.MarketRangeSearchResponse;
 import com.sujin.todayjang.market.dto.MarketSearchResponse;
 import com.sujin.todayjang.market.dto.NearbyMarketResponse;
 import com.sujin.todayjang.market.service.MarketSearchService;
@@ -39,30 +38,6 @@ public class MarketController {
                 province,
                 marketType,
                 date
-        );
-    }
-
-    @GetMapping("/range")
-    public List<MarketRangeSearchResponse> searchMarketsByRange(
-
-            @RequestParam String province,
-
-            @RequestParam String marketType,
-
-            @RequestParam
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-            LocalDate startDate,
-
-            @RequestParam
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-            LocalDate endDate
-    ) {
-
-        return marketSearchService.searchRange(
-                province,
-                marketType,
-                startDate,
-                endDate
         );
     }
 

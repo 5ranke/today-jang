@@ -2,10 +2,8 @@ import { loadProvinces } from "./region.js";
 
 import {
     searchMarketsApi,
-    searchMarketsByRangeApi,
     searchNearbyMarketsApi,
     renderMarkets,
-    renderRangeMarkets,
     renderNearbyMarkets,
     formatDisplayDate
 } from "./market.js";
@@ -116,31 +114,7 @@ searchButton.addEventListener("click", async () => {
 
     try {
 
-        // 이번 주 검색
-        if (selectedDateType === "week") {
-
-            const { startDate, endDate } =
-                getThisWeekRange();
-
-            const markets =
-                await searchMarketsByRangeApi(
-                    province,
-                    selectedMarketType,
-                    startDate,
-                    endDate
-                );
-
-            renderRangeMarkets(
-                markets,
-                marketList,
-                sectionTitle
-            );
-
-            return;
-        }
-
-
-        // 오늘 / 내일 / 날짜 선택 검색
+        // 오늘 / 날짜 선택 검색
         const date = getSelectedDate();
 
         if (!date) {
@@ -186,17 +160,6 @@ function getSelectedDate() {
         return formatDate(today);
     }
 
-    if (selectedDateType === "tomorrow") {
-
-        const tomorrow = new Date(today);
-
-        tomorrow.setDate(
-            today.getDate() + 1
-        );
-
-        return formatDate(tomorrow);
-    }
-
     if (selectedDateType === "custom") {
         return customSelectedDate;
     }
@@ -216,39 +179,6 @@ function formatDate(date) {
         String(date.getDate()).padStart(2, "0");
 
     return `${year}-${month}-${day}`;
-}
-
-function getThisWeekRange() {
-
-    const today = new Date();
-
-    const endDate = new Date(today);
-
-    /*
-     * getDay()
-     *
-     * 일요일 = 0
-     * 월요일 = 1
-     * ...
-     * 토요일 = 6
-     */
-
-    const dayOfWeek = today.getDay();
-
-    // 오늘부터 일요일까지 남은 날짜 수입니다.
-    const daysUntilSunday =
-        dayOfWeek === 0
-            ? 0
-            : 7 - dayOfWeek;
-
-    endDate.setDate(
-        today.getDate() + daysUntilSunday
-    );
-
-    return {
-        startDate: formatDate(today),
-        endDate: formatDate(endDate)
-    };
 }
 
 function searchNearbyMarkets() {

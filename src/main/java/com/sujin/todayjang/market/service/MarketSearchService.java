@@ -2,7 +2,6 @@ package com.sujin.todayjang.market.service;
 
 import com.sujin.todayjang.market.domain.Market;
 import com.sujin.todayjang.market.dto.MarketDetailResponse;
-import com.sujin.todayjang.market.dto.MarketRangeSearchResponse;
 import com.sujin.todayjang.market.dto.MarketSearchResponse;
 import com.sujin.todayjang.market.dto.NearbyMarketResponse;
 import com.sujin.todayjang.market.repository.MarketRepository;
@@ -49,50 +48,6 @@ public class MarketSearchService {
                         )
                 )
                 .map(MarketSearchResponse::from)
-                .toList();
-    }
-
-    public List<MarketRangeSearchResponse> searchRange(
-            String province,
-            String marketType,
-            LocalDate startDate,
-            LocalDate endDate
-    ) {
-
-        if (startDate.isAfter(endDate)) {
-            throw new IllegalArgumentException(
-                    "시작 날짜는 종료 날짜보다 늦을 수 없습니다."
-            );
-        }
-
-        List<Market> markets =
-                marketRepository.findByProvince(province);
-
-        return markets.stream()
-                .filter(market -> matchesMarketType(market, marketType))
-                .map(market -> {
-
-                    List<LocalDate> openDates =
-                            startDate
-                                    .datesUntil(endDate.plusDays(1))
-                                    .filter(date ->
-                                            marketDayCalculator.isOpenOn(
-                                                    market.getOpeningCycle(),
-                                                    date
-                                            )
-                                    )
-                                    .toList();
-
-                    if (openDates.isEmpty()) {
-                        return null;
-                    }
-
-                    return MarketRangeSearchResponse.from(
-                            market,
-                            openDates
-                    );
-                })
-                .filter(response -> response != null)
                 .toList();
     }
 

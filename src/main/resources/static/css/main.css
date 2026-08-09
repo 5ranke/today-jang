@@ -72,9 +72,9 @@ label {
     font-weight: 700;
 }
 
-/* 시장 유형과 방문 날짜 제목에 위쪽 여백을 추가합니다. */
-.market-type-label,
-.date-label {
+/* 방문 날짜와 여행 지역 제목에 위쪽 여백을 추가합니다. */
+.date-label,
+.region-label {
     margin-top: 16px;
 }
 
@@ -93,13 +93,16 @@ input:focus {
     border-color: #555;
 }
 
-/* 지역 선택창입니다. */
-.region-selects {
+/* 지역 선택창과 검색 버튼을 한 줄에 배치합니다. */
+.region-search-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
     width: 100%;
 }
 
 /* 도/광역시 선택창입니다. */
-.region-selects select {
+.region-search-row select {
     width: 100%;
     padding: 14px;
     border: 1px solid #ddd;
@@ -112,7 +115,7 @@ input:focus {
 }
 
 /* 지역 선택창을 눌렀을 때 테두리를 강조합니다. */
-.region-selects select:focus {
+.region-search-row select:focus {
     border-color: #555;
 }
 
@@ -129,7 +132,7 @@ input:focus {
 }
 
 .date-buttons {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
 }
 
 .custom-date-input {
@@ -194,14 +197,14 @@ input:focus {
 /* 현재 선택된 시장 유형과 날짜 버튼입니다. */
 .market-type-buttons button.active,
 .date-buttons button.active {
-    background: #222;
+    background: #555;
     color: #fff;
 }
 
 /* 장날 찾기 버튼입니다. */
 .primary-button {
     width: 100%;
-    margin-top: 10px;
+    margin-top: 0;
     padding: 15px;
     background: #222;
     color: #fff;
@@ -383,10 +386,6 @@ button:hover {
 
     .hero h1 {
         font-size: 24px;
-    }
-
-    .date-buttons {
-        grid-template-columns: repeat(2, 1fr);
     }
 
 }
