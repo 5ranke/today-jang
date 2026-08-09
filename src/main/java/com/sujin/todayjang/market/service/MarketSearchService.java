@@ -33,6 +33,7 @@ public class MarketSearchService {
 
     public List<MarketSearchResponse> search(
             String province,
+            String marketType,
             LocalDate date
     ) {
 
@@ -40,6 +41,7 @@ public class MarketSearchService {
                 marketRepository.findByProvince(province);
 
         return markets.stream()
+                .filter(market -> matchesMarketType(market, marketType))
                 .filter(market ->
                         marketDayCalculator.isOpenOn(
                                 market.getOpeningCycle(),
@@ -52,6 +54,7 @@ public class MarketSearchService {
 
     public List<MarketRangeSearchResponse> searchRange(
             String province,
+            String marketType,
             LocalDate startDate,
             LocalDate endDate
     ) {
@@ -66,6 +69,7 @@ public class MarketSearchService {
                 marketRepository.findByProvince(province);
 
         return markets.stream()
+                .filter(market -> matchesMarketType(market, marketType))
                 .map(market -> {
 
                     List<LocalDate> openDates =
@@ -90,6 +94,17 @@ public class MarketSearchService {
                 })
                 .filter(response -> response != null)
                 .toList();
+    }
+
+    private boolean matchesMarketType(Market market, String marketType) {
+
+        return switch (marketType) {
+            case "five-day" -> !"상설장".equals(market.getMarketType());
+            case "market" -> "상설장".equals(market.getMarketType());
+            default -> throw new IllegalArgumentException(
+                    "올바르지 않은 시장 유형입니다."
+            );
+        };
     }
 
     public MarketDetailResponse getMarket(Long id) {

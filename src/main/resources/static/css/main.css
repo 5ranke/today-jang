@@ -72,7 +72,8 @@ label {
     font-weight: 700;
 }
 
-/* 방문 날짜 제목에 위쪽 여백을 추가합니다. */
+/* 시장 유형과 방문 날짜 제목에 위쪽 여백을 추가합니다. */
+.market-type-label,
 .date-label {
     margin-top: 16px;
 }
@@ -115,12 +116,20 @@ input:focus {
     border-color: #555;
 }
 
-/* 날짜 선택 버튼을 격자 형태로 배치합니다. */
+/* 시장 유형과 날짜 선택 버튼을 격자 형태로 배치합니다. */
+.market-type-buttons,
 .date-buttons {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
     gap: 8px;
     margin: 12px 0;
+}
+
+.market-type-buttons {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.date-buttons {
+    grid-template-columns: repeat(4, 1fr);
 }
 
 .custom-date-input {
@@ -162,6 +171,7 @@ input:focus {
 
 /* 모든 버튼에 공통으로 적용되는 디자인입니다. */
 .date-buttons button,
+.market-type-buttons button,
 .primary-button,
 .location-button,
 .card-actions button {
@@ -174,13 +184,15 @@ input:focus {
     color: #222;
 }
 
-/* 날짜 선택 버튼입니다. */
+/* 시장 유형과 날짜 선택 버튼입니다. */
+.market-type-buttons button,
 .date-buttons button {
     padding: 11px 8px;
     background: #f1f1ef;
 }
 
-/* 현재 선택된 날짜 버튼입니다. */
+/* 현재 선택된 시장 유형과 날짜 버튼입니다. */
+.market-type-buttons button.active,
 .date-buttons button.active {
     background: #222;
     color: #fff;

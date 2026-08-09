@@ -1,9 +1,10 @@
 // 시장 검색 API를 호출합니다.
-export async function searchMarketsApi(province, date) {
+export async function searchMarketsApi(province, marketType, date) {
 
     const url =
         `/api/markets`
         + `?province=${encodeURIComponent(province)}`
+        + `&marketType=${encodeURIComponent(marketType)}`
         + `&date=${date}`;
 
     const response = await fetch(url);
@@ -17,6 +18,7 @@ export async function searchMarketsApi(province, date) {
 
 export async function searchMarketsByRangeApi(
     province,
+    marketType,
     startDate,
     endDate
 ) {
@@ -24,6 +26,7 @@ export async function searchMarketsByRangeApi(
     const url =
         `/api/markets/range`
         + `?province=${encodeURIComponent(province)}`
+        + `&marketType=${encodeURIComponent(marketType)}`
         + `&startDate=${startDate}`
         + `&endDate=${endDate}`;
 
