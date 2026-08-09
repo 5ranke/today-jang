@@ -241,14 +241,14 @@ export function renderNearbyMarkets(
     marketList.innerHTML = "";
 
     sectionTitle.textContent =
-        "내 주변 오늘 열리는 장";
+        "내 주변 오늘 열리는 5일장";
 
     if (markets.length === 0) {
 
         marketList.innerHTML = `
             <div class="empty-result">
                 현재 위치에서 20km 이내에
-                오늘 열리는 시장이 없어요.
+                오늘 열리는 5일장이 없어요.
             </div>
         `;
 

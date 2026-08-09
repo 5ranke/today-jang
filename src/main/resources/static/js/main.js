@@ -102,6 +102,17 @@ customDateInput.addEventListener("change", () => {
         customDateInput.value;
 });
 
+customDateInput.addEventListener("click", () => {
+
+    if (typeof customDateInput.showPicker === "function") {
+        try {
+            customDateInput.showPicker();
+        } catch (error) {
+            console.debug("날짜 선택기를 자동으로 열 수 없습니다.", error);
+        }
+    }
+});
+
 
 searchButton.addEventListener("click", async () => {
 

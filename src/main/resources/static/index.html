@@ -50,38 +50,55 @@
   <!-- 검색 조건을 입력하는 영역입니다. -->
   <section class="search-box">
 
-    <label>시장 유형</label>
+    <!-- 현재 위치를 이용해 주변 5일장을 검색합니다. -->
+    <button
+            type="button"
+            id="locationButton"
+            class="location-button"
+    >
+      📍 내 주변 오늘 열리는 5일장
+    </button>
 
-    <div class="market-type-buttons">
-      <button type="button" class="active" data-market-type="five-day">
-        5일장
-      </button>
-
-      <button type="button" data-market-type="market">
-        시장
-      </button>
+    <div class="search-divider">
+      <span>또는 여행 일정으로 찾기</span>
     </div>
 
-    <!-- 날짜 선택 영역의 설명입니다. -->
-    <label class="date-label">방문 날짜</label>
+    <div class="search-options-row">
+      <div class="search-option">
+        <label>시장 유형</label>
 
-    <!-- 날짜 조건 버튼 목록입니다. -->
-    <div class="date-buttons">
-      <button type="button" class="active" data-date-type="today">
-        오늘
-      </button>
+        <div class="market-type-buttons">
+          <button type="button" class="active" data-market-type="five-day">
+            5일장
+          </button>
 
-      <button type="button" data-date-type="custom">
-        날짜 선택
-      </button>
+          <button type="button" data-market-type="market">
+            시장
+          </button>
+        </div>
+      </div>
+
+      <div class="search-option">
+        <label>방문 날짜</label>
+
+        <div class="date-buttons">
+          <button type="button" class="active" data-date-type="today">
+            오늘
+          </button>
+
+          <button type="button" data-date-type="custom">
+            날짜 선택
+          </button>
+        </div>
+
+        <input
+                type="date"
+                id="customDate"
+                class="custom-date-input"
+                hidden
+        />
+      </div>
     </div>
-
-    <input
-            type="date"
-            id="customDate"
-            class="custom-date-input"
-            hidden
-    />
 
     <label class="region-label" for="province">여행 지역</label>
 
@@ -101,14 +118,6 @@
       </button>
     </div>
 
-    <!-- 현재 위치를 이용해 주변 시장을 검색합니다. -->
-    <button
-            type="button"
-            id="locationButton"
-            class="location-button"
-    >
-      📍 내 주변 오늘 열리는 장
-    </button>
   </section>
 
   <!-- 검색 결과 영역의 제목입니다. -->

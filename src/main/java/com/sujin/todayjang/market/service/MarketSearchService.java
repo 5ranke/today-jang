@@ -81,6 +81,9 @@ public class MarketSearchService {
         return marketRepository.findAll()
                 .stream()
 
+                // 순수 상설장을 제외하고 정기 장날이 있는 시장만 남깁니다.
+                .filter(market -> matchesMarketType(market, "five-day"))
+
                 // 좌표 정보가 없는 시장은 제외합니다.
                 .filter(market ->
                         market.getLatitude() != null

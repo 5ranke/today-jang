@@ -64,6 +64,25 @@ body {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
 }
 
+/* 빠른 주변 검색과 여행 일정 검색을 구분합니다. */
+.search-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 22px 0;
+    color: #888;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.search-divider::before,
+.search-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #e5e5e2;
+}
+
 /* 입력 항목 이름의 공통 디자인입니다. */
 label {
     display: block;
@@ -72,10 +91,20 @@ label {
     font-weight: 700;
 }
 
-/* 방문 날짜와 여행 지역 제목에 위쪽 여백을 추가합니다. */
-.date-label,
+/* 여행 지역 제목에 위쪽 여백을 추가합니다. */
 .region-label {
     margin-top: 16px;
+}
+
+/* 시장 유형과 방문 날짜가 검색 영역을 절반씩 차지합니다. */
+.search-options-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.search-option {
+    min-width: 0;
 }
 
 /* 지역 검색 입력창입니다. */
@@ -119,20 +148,22 @@ input:focus {
     border-color: #555;
 }
 
-/* 시장 유형과 날짜 선택 버튼을 격자 형태로 배치합니다. */
+/* 시장 유형과 날짜 선택 버튼을 작은 크기로 좌측 정렬합니다. */
 .market-type-buttons,
 .date-buttons {
-    display: grid;
+    display: flex;
+    justify-content: flex-start;
     gap: 8px;
     margin: 12px 0;
 }
 
-.market-type-buttons {
-    grid-template-columns: repeat(2, 1fr);
-}
-
-.date-buttons {
-    grid-template-columns: repeat(2, 1fr);
+.search-option .market-type-buttons button,
+.search-option .date-buttons button {
+    flex: 1;
+    min-width: 0;
+    padding-right: 8px;
+    padding-left: 8px;
+    white-space: nowrap;
 }
 
 .custom-date-input {
@@ -190,7 +221,8 @@ input:focus {
 /* 시장 유형과 날짜 선택 버튼입니다. */
 .market-type-buttons button,
 .date-buttons button {
-    padding: 11px 8px;
+    min-width: 88px;
+    padding: 11px 18px;
     background: #f1f1ef;
 }
 
@@ -214,10 +246,10 @@ input:focus {
 /* 현재 위치 검색 버튼입니다. */
 .location-button {
     width: 100%;
-    margin-top: 10px;
+    margin-top: 0;
     padding: 14px;
-    border: 1px solid #ddd;
-    background: #fff;
+    background: #222;
+    color: #fff;
     font-weight: 700;
 }
 
