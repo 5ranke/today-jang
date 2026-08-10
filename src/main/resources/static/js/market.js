@@ -75,7 +75,7 @@ function createMarketCard(market, date) {
             ${formatDisplayDate(date)}
         </p>
 
-        <p>${market.marketType} · ${market.openingCycle}</p>
+        <p>${createMarketSummary(market)}</p>
 
         <p>${market.roadAddress ?? market.lotAddress ?? "주소 정보 없음"}</p>
 
@@ -116,6 +116,19 @@ function createMarketCard(market, date) {
     });
 
     return card;
+}
+
+function createMarketSummary(market) {
+
+    const summary = [market.marketType, market.openingCycle];
+
+    if (market.storeCount != null) {
+        summary.push(
+            `점포 ${market.storeCount.toLocaleString("ko-KR")}개`
+        );
+    }
+
+    return summary.join(" · ");
 }
 
 function createTags(market) {
@@ -162,7 +175,7 @@ function createNearbyMarketCard(market) {
         </p>
 
         <p>
-            ${market.marketType} · ${market.openingCycle}
+            ${createMarketSummary(market)}
         </p>
 
         <p>

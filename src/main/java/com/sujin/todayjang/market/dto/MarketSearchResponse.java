@@ -14,6 +14,7 @@ public record MarketSearchResponse(
         String roadAddress,
         String lotAddress,
         String openingCycle,
+        Integer storeCount,
         String products,
         Boolean hasParking,
         Boolean hasPublicToilet
@@ -31,6 +32,7 @@ public record MarketSearchResponse(
                 market.getRoadAddress(),
                 market.getLotAddress(),
                 market.getOpeningCycle(),
+                market.getStoreCount(),
                 market.getProducts(),
                 market.getHasParking(),
                 market.getHasPublicToilet()
