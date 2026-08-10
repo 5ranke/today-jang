@@ -63,60 +63,47 @@
       <span>또는 여행 일정으로 찾기</span>
     </div>
 
-    <div class="search-options-row">
-      <div class="search-option">
-        <label>시장 유형</label>
-
-        <div class="market-type-buttons">
-          <button type="button" class="active" data-market-type="five-day">
-            5일장
-          </button>
-
-          <button type="button" data-market-type="market">
-            시장
-          </button>
-        </div>
-      </div>
-
-      <div class="search-option">
-        <label>방문 날짜</label>
-
-        <div class="date-buttons">
-          <button type="button" class="active" data-date-type="today">
-            오늘
-          </button>
-
-          <button type="button" data-date-type="custom">
-            날짜 선택
-          </button>
-        </div>
-
-        <input
-                type="date"
-                id="customDate"
-                class="custom-date-input"
-                hidden
-        />
-      </div>
-    </div>
-
     <label class="region-label" for="province">여행 지역</label>
 
-    <div class="region-search-row">
-      <!-- 도/광역시 선택 -->
-      <select id="province">
-        <option value="">도/광역시 선택</option>
-      </select>
+    <!-- 도/광역시 선택 -->
+    <select id="province" class="region-select">
+      <option value="">도/광역시 선택</option>
+    </select>
 
-      <!-- 지역과 날짜 조건으로 시장을 검색합니다. -->
-      <button
-              type="button"
-              id="searchButton"
-              class="primary-button"
-      >
-        장날 찾기
-      </button>
+    <div class="date-search-option">
+      <label>방문 날짜</label>
+
+      <div class="date-buttons">
+        <button type="button" class="active" data-date-type="today">
+          오늘
+        </button>
+
+        <button type="button" data-date-type="custom">
+          날짜 선택
+        </button>
+      </div>
+
+      <input
+              type="date"
+              id="customDate"
+              class="custom-date-input"
+              hidden
+      />
     </div>
+
+    <label class="include-permanent-option" for="includePermanentMarkets">
+      <input type="checkbox" id="includePermanentMarkets" />
+      <span>상설시장도 함께 보기</span>
+    </label>
+
+    <!-- 지역과 날짜 조건으로 시장을 검색합니다. -->
+    <button
+            type="button"
+            id="searchButton"
+            class="primary-button"
+    >
+      5일장 찾기
+    </button>
 
   </section>
 

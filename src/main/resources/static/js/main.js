@@ -14,9 +14,6 @@ const provinceSelect = document.getElementById("province");
 const dateButtons =
     document.querySelectorAll(".date-buttons button");
 
-const marketTypeButtons =
-    document.querySelectorAll(".market-type-buttons button");
-
 const searchButton =
     document.getElementById("searchButton");
 
@@ -29,12 +26,13 @@ const marketList =
 const customDateInput =
     document.getElementById("customDate");
 
+const includePermanentMarkets =
+    document.getElementById("includePermanentMarkets");
+
 const sectionTitle =
     document.querySelector(".section-title");
 
 let selectedDateType = "today";
-
-let selectedMarketType = "five-day";
 
 let customSelectedDate = null;
 
@@ -83,19 +81,6 @@ dateButtons.forEach(button => {
     });
 });
 
-marketTypeButtons.forEach(button => {
-
-    button.addEventListener("click", () => {
-
-        marketTypeButtons.forEach(item =>
-            item.classList.remove("active")
-        );
-
-        button.classList.add("active");
-        selectedMarketType = button.dataset.marketType;
-    });
-});
-
 customDateInput.addEventListener("change", () => {
 
     customSelectedDate =
@@ -136,7 +121,9 @@ searchButton.addEventListener("click", async () => {
         const markets =
             await searchMarketsApi(
                 province,
-                selectedMarketType,
+                includePermanentMarkets.checked
+                    ? "all"
+                    : "five-day",
                 date
             );
 

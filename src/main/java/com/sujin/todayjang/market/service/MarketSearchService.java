@@ -56,6 +56,7 @@ public class MarketSearchService {
         return switch (marketType) {
             case "five-day" -> !"상설장".equals(market.getMarketType());
             case "market" -> "상설장".equals(market.getMarketType());
+            case "all" -> true;
             default -> throw new IllegalArgumentException(
                     "올바르지 않은 시장 유형입니다."
             );

@@ -91,20 +91,14 @@ label {
     font-weight: 700;
 }
 
-/* 여행 지역 제목에 위쪽 여백을 추가합니다. */
+/* 여행 지역 제목입니다. */
 .region-label {
-    margin-top: 16px;
+    margin-top: 0;
 }
 
-/* 시장 유형과 방문 날짜가 검색 영역을 절반씩 차지합니다. */
-.search-options-row {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px;
-}
-
-.search-option {
-    min-width: 0;
+/* 지역 아래에 방문 날짜를 배치합니다. */
+.date-search-option {
+    margin-top: 18px;
 }
 
 /* 지역 검색 입력창입니다. */
@@ -122,16 +116,8 @@ input:focus {
     border-color: #555;
 }
 
-/* 지역 선택창과 검색 버튼을 한 줄에 배치합니다. */
-.region-search-row {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-    width: 100%;
-}
-
 /* 도/광역시 선택창입니다. */
-.region-search-row select {
+.region-select {
     width: 100%;
     padding: 14px;
     border: 1px solid #ddd;
@@ -144,12 +130,11 @@ input:focus {
 }
 
 /* 지역 선택창을 눌렀을 때 테두리를 강조합니다. */
-.region-search-row select:focus {
+.region-select:focus {
     border-color: #555;
 }
 
-/* 시장 유형과 날짜 선택 버튼을 작은 크기로 좌측 정렬합니다. */
-.market-type-buttons,
+/* 날짜 선택 버튼을 좌측 정렬합니다. */
 .date-buttons {
     display: flex;
     justify-content: flex-start;
@@ -157,8 +142,7 @@ input:focus {
     margin: 12px 0;
 }
 
-.search-option .market-type-buttons button,
-.search-option .date-buttons button {
+.date-search-option .date-buttons button {
     flex: 1;
     min-width: 0;
     padding-right: 8px;
@@ -205,7 +189,6 @@ input:focus {
 
 /* 모든 버튼에 공통으로 적용되는 디자인입니다. */
 .date-buttons button,
-.market-type-buttons button,
 .primary-button,
 .location-button,
 .card-actions button {
@@ -218,22 +201,39 @@ input:focus {
     color: #222;
 }
 
-/* 시장 유형과 날짜 선택 버튼입니다. */
-.market-type-buttons button,
+/* 날짜 선택 버튼입니다. */
 .date-buttons button {
     min-width: 88px;
     padding: 11px 18px;
     background: #f1f1ef;
 }
 
-/* 현재 선택된 시장 유형과 날짜 버튼입니다. */
-.market-type-buttons button.active,
+/* 현재 선택된 날짜 버튼입니다. */
 .date-buttons button.active {
     background: #555;
     color: #fff;
 }
 
-/* 장날 찾기 버튼입니다. */
+/* 상설시장 포함 여부를 선택합니다. */
+.include-permanent-option {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin: 18px 0 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.include-permanent-option input {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    padding: 0;
+    accent-color: #222;
+    cursor: pointer;
+}
+
+/* 5일장 찾기 버튼입니다. */
 .primary-button {
     width: 100%;
     margin-top: 0;
