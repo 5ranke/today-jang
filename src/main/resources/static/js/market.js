@@ -56,7 +56,7 @@ export function renderMarkets(markets, date, marketList) {
     });
 }
 
-function createMarketCard(market, date) {
+export function createMarketCard(market, date) {
 
     const card = document.createElement("article");
 
@@ -120,7 +120,15 @@ function createMarketCard(market, date) {
 
 function createMarketSummary(market) {
 
-    const summary = [market.marketType, market.openingCycle];
+    const marketType = market.marketType
+        .replace("상설장", "상설시장")
+        .replaceAll("+", "·");
+
+    const openingCycle = market.openingCycle === "매일"
+        ? "매일 운영"
+        : `장날 ${market.openingCycle.replaceAll("+", ", ")}`;
+
+    const summary = [marketType, openingCycle];
 
     if (market.storeCount != null) {
         summary.push(
@@ -153,7 +161,7 @@ function createTags(market) {
     return tags.join("");
 }
 
-function createNearbyMarketCard(market) {
+export function createNearbyMarketCard(market) {
 
     const card =
         document.createElement("article");

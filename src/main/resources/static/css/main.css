@@ -260,14 +260,93 @@ button:hover {
 
 /* 검색 결과 영역의 제목입니다. */
 .section-title {
-    margin: 30px 0 14px;
+    margin: 30px 0 6px;
     font-size: 19px;
+}
+
+.result-count {
+    margin: 0 0 14px;
+    color: #777;
+    font-size: 14px;
+}
+
+/* 목록과 지도 보기 방식을 전환하는 탭입니다. */
+.result-view-tabs {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+    margin-bottom: 14px;
+    padding: 4px;
+    border-radius: 12px;
+    background: #ecece8;
+}
+
+.result-view-tabs button {
+    padding: 10px 12px;
+    border: 0;
+    border-radius: 9px;
+    background: transparent;
+    color: #666;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.result-view-tabs button.active {
+    background: #fff;
+    color: #222;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
 }
 
 /* 시장 카드들을 세로로 배치합니다. */
 .market-list {
     display: grid;
     gap: 12px;
+}
+
+.market-list[hidden],
+.market-map-panel[hidden] {
+    display: none;
+}
+
+/* 검색 결과를 마커로 보여주는 지도입니다. */
+.market-map-panel {
+    position: relative;
+}
+
+.market-map {
+    width: 100%;
+    height: 560px;
+    overflow: hidden;
+    border: 1px solid #deded9;
+    border-radius: 16px;
+    background: #e9ecef;
+}
+
+.map-notice {
+    margin: 10px 2px 0;
+    color: #777;
+    font-size: 13px;
+    text-align: center;
+}
+
+.market-map-popup .leaflet-popup-content-wrapper {
+    border-radius: 16px;
+}
+
+.market-map-popup .leaflet-popup-content {
+    margin: 12px;
+}
+
+.market-map-popup .map-market-card {
+    width: 100%;
+    padding: 4px;
+    border: 0;
+}
+
+.market-map-popup .map-market-card h3 {
+    padding-right: 18px;
 }
 
 .empty-result {
@@ -418,6 +497,10 @@ button:hover {
 
     .hero h1 {
         font-size: 24px;
+    }
+
+    .market-map {
+        height: 520px;
     }
 
 }

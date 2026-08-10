@@ -8,6 +8,8 @@ import {
     formatDisplayDate
 } from "./market.js";
 
+import { renderMarketMap } from "./map.js";
+
 
 const provinceSelect = document.getElementById("province");
 
@@ -32,9 +34,24 @@ const includePermanentMarkets =
 const sectionTitle =
     document.querySelector(".section-title");
 
+const resultCount =
+    document.getElementById("resultCount");
+
+const resultViewButtons =
+    document.querySelectorAll(".result-view-tabs button");
+
+const marketMapPanel =
+    document.getElementById("marketMapPanel");
+
 let selectedDateType = "today";
 
 let customSelectedDate = null;
+
+let currentMarkets = [];
+
+let currentSearchDate = null;
+
+let isCurrentSearchNearby = false;
 
 
 initialize();
@@ -98,6 +115,16 @@ customDateInput.addEventListener("click", () => {
     }
 });
 
+resultViewButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        changeResultView(
+            button.id === "mapViewTab" ? "map" : "list"
+        );
+    });
+});
+
+changeResultView("map");
+
 
 searchButton.addEventListener("click", async () => {
 
@@ -127,6 +154,10 @@ searchButton.addEventListener("click", async () => {
                 date
             );
 
+        currentMarkets = markets;
+        currentSearchDate = date;
+        isCurrentSearchNearby = false;
+
         renderMarkets(
             markets,
             date,
@@ -135,6 +166,10 @@ searchButton.addEventListener("click", async () => {
 
         sectionTitle.textContent =
             `${formatDisplayDate(date)} 열리는 장`;
+
+        updateResultCount(markets.length);
+
+        changeResultView("map");
 
     } catch (error) {
 
@@ -179,6 +214,39 @@ function formatDate(date) {
     return `${year}-${month}-${day}`;
 }
 
+function changeResultView(view) {
+
+    const showMap = view === "map";
+
+    resultViewButtons.forEach(button => {
+        const isActive = showMap
+            ? button.id === "mapViewTab"
+            : button.id === "listViewTab";
+
+        button.classList.toggle("active", isActive);
+        button.setAttribute("aria-selected", String(isActive));
+    });
+
+    marketList.hidden = showMap;
+    marketMapPanel.hidden = !showMap;
+
+    if (showMap) {
+        renderMarketMap(
+            currentMarkets,
+            currentSearchDate,
+            isCurrentSearchNearby
+        );
+    }
+}
+
+function updateResultCount(count) {
+
+    resultCount.textContent = count === 0
+        ? "선택한 조건에 열리는 장이 없어요"
+        : `총 ${count.toLocaleString("ko-KR")}개의 장이 열려요`;
+    resultCount.hidden = false;
+}
+
 function searchNearbyMarkets() {
 
     if (!navigator.geolocation) {
@@ -210,11 +278,19 @@ function searchNearbyMarkets() {
                         today
                     );
 
+                currentMarkets = markets;
+                currentSearchDate = today;
+                isCurrentSearchNearby = true;
+
                 renderNearbyMarkets(
                     markets,
                     marketList,
                     sectionTitle
                 );
+
+                updateResultCount(markets.length);
+
+                changeResultView("map");
 
             } catch (error) {
 
