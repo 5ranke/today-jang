@@ -3,762 +3,676 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>오늘장 Portfolio Cover</title>
+    <title>오늘장 | 전국 5일장 찾기</title>
 
     <style>
+        :root {
+            --ink: #18201c;
+            --muted: #6f766f;
+            --paper: #f4f1e8;
+            --card: #fffdf8;
+            --line: #dedbd1;
+            --green: #204b3a;
+            --green-soft: #dce9df;
+            --orange: #df6b38;
+            --blue: #3478d4;
+        }
+
         * {
             box-sizing: border-box;
         }
 
         body {
             margin: 0;
-            font-family:
-                    -apple-system,
-                    BlinkMacSystemFont,
-                    "Pretendard",
-                    "Segoe UI",
-                    sans-serif;
-
-            background: #f4f1e8;
-            color: #222;
+            background: #ddd9ce;
+            color: var(--ink);
+            font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Segoe UI", sans-serif;
         }
 
         .page {
+            position: relative;
             width: 1440px;
             height: 900px;
-
             margin: 0 auto;
-
-            /* 기존 70px 90px → 위쪽과 좌우 여백 증가 */
-            padding: 92px 125px 70px;
-
+            padding: 62px 92px 58px;
             overflow: hidden;
-            position: relative;
-
             background:
-                    radial-gradient(
-                            circle at 10% 15%,
-                            rgba(239, 107, 66, 0.12),
-                            transparent 27%
-                    ),
-                    radial-gradient(
-                            circle at 88% 80%,
-                            rgba(48, 120, 80, 0.08),
-                            transparent 25%
-                    );
+                    radial-gradient(circle at 82% 12%, rgba(223, 107, 56, 0.12), transparent 27%),
+                    radial-gradient(circle at 12% 88%, rgba(32, 75, 58, 0.1), transparent 29%),
+                    var(--paper);
         }
 
-        /* 상단 */
-        .top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .page::before {
+            content: "";
+            position: absolute;
+            top: -210px;
+            right: -150px;
+            width: 560px;
+            height: 560px;
+            border: 1px solid rgba(32, 75, 58, 0.08);
+            border-radius: 50%;
+        }
 
-            /* 기존보다 본문과의 간격도 살짝 조정 */
-            margin-bottom: 45px;
+        .top {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 52px;
         }
 
         .logo {
             display: flex;
             align-items: center;
             gap: 11px;
-
-            font-size: 24px;
-            font-weight: 800;
+            font-size: 23px;
+            font-weight: 850;
+            letter-spacing: -0.7px;
         }
 
         .logo img {
-            width: 46px;
-            height: 46px;
+            width: 40px;
+            height: 40px;
             object-fit: contain;
         }
 
-        .service-url {
-            padding: 10px 15px;
-
-            border: 1px solid #ded8ca;
-            border-radius: 999px;
-
-            background: rgba(255, 255, 255, 0.55);
-
-            color: #777269;
-
-            font-size: 14px;
-            font-weight: 700;
+        .top-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        /* 메인 영역 */
+        .release,
+        .service-url {
+            padding: 9px 14px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 750;
+        }
+
+        .release {
+            background: var(--green);
+            color: #fff;
+        }
+
+        .service-url {
+            border: 1px solid var(--line);
+            background: rgba(255, 253, 248, 0.74);
+            color: #686e68;
+        }
+
         .hero {
+            position: relative;
+            z-index: 1;
             display: grid;
-
-            grid-template-columns: 1.15fr 0.85fr;
-
-            /* 기존 80px */
-            gap: 60px;
-
+            grid-template-columns: 1fr 500px;
+            gap: 86px;
             align-items: center;
         }
 
-        .category {
-            display: inline-block;
+        .eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin-bottom: 20px;
+            color: var(--green);
+            font-size: 12px;
+            font-weight: 850;
+            letter-spacing: 1.2px;
+        }
 
-            margin-bottom: 22px;
-            padding: 8px 13px;
-
-            border-radius: 999px;
-
-            background: #fff0e7;
-            color: #a6492d;
-
-            font-size: 13px;
-            font-weight: 800;
+        .eyebrow::before {
+            content: "";
+            width: 28px;
+            height: 2px;
+            background: var(--orange);
         }
 
         h1 {
             margin: 0;
-
-            font-size: 64px;
+            max-width: 650px;
+            font-size: 66px;
             line-height: 1.08;
-
-            letter-spacing: -3px;
+            letter-spacing: -4.2px;
         }
 
-        .highlight {
-            color: #ef6b42;
+        h1 em {
+            color: var(--orange);
+            font-style: normal;
         }
 
         .description {
-            margin: 26px 0;
-
             max-width: 650px;
-
-            color: #6f6b63;
-
-            font-size: 20px;
-            line-height: 1.7;
+            margin: 26px 0 32px;
+            color: #666d66;
+            font-size: 19px;
+            line-height: 1.72;
+            letter-spacing: -0.35px;
         }
 
-        /* 프로젝트 배경 */
-        .story {
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
             max-width: 650px;
+        }
 
-            padding: 18px 20px;
-
-            border: 1px solid #e5dfd3;
+        .feature {
+            min-height: 108px;
+            padding: 17px;
+            border: 1px solid rgba(213, 211, 201, 0.9);
             border-radius: 18px;
+            background: rgba(255, 253, 248, 0.7);
+        }
 
-            background: rgba(255, 255, 255, 0.55);
-
-            color: #555149;
-
+        .feature-icon {
+            display: grid;
+            place-items: center;
+            width: 30px;
+            height: 30px;
+            margin-bottom: 12px;
+            border-radius: 9px;
+            background: var(--green-soft);
             font-size: 15px;
-            line-height: 1.7;
+        }
+
+        .feature strong {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .feature span {
+            color: #7b807b;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        .story {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            max-width: 650px;
+            margin-top: 18px;
+            padding-top: 18px;
+            border-top: 1px solid var(--line);
+            color: #767b76;
+            font-size: 12px;
+            line-height: 1.6;
         }
 
         .story strong {
-            color: #222;
-        }
-
-        /* 기술 스택 */
-        .tech-stack {
-            display: flex;
-            flex-wrap: wrap;
-
-            gap: 9px;
-
-            margin-top: 22px;
-        }
-
-        .tech {
-            padding: 9px 13px;
-
-            border: 1px solid #ded8cc;
-            border-radius: 999px;
-
-            background: #fffdf8;
-
+            flex: 0 0 auto;
+            color: var(--ink);
             font-size: 13px;
-            font-weight: 700;
         }
-
-        /* 프로젝트 정보 */
-        .project-info {
-            display: flex;
-
-            gap: 34px;
-
-            margin-top: 30px;
-        }
-
-        .info strong {
-            display: block;
-
-            margin-bottom: 4px;
-
-            font-size: 20px;
-        }
-
-        .info span {
-            color: #777269;
-
-            font-size: 12px;
-            font-weight: 700;
-        }
-
-        /* =========================
-           휴대폰 목업
-           ========================= */
 
         .phone-area {
             position: relative;
-
             display: flex;
             justify-content: center;
-            align-items: center;
         }
 
-        .phone-background {
+        .phone-shadow {
             position: absolute;
-
-            width: 470px;
-            height: 470px;
-
+            bottom: -30px;
+            width: 390px;
+            height: 76px;
             border-radius: 50%;
-
-            background: rgba(239, 107, 66, 0.11);
+            background: rgba(25, 32, 28, 0.18);
+            filter: blur(24px);
         }
 
         .phone {
             position: relative;
             z-index: 1;
-
-            width: 345px;
-            height: 685px;
-
+            width: 384px;
+            height: 708px;
             padding: 10px;
-
+            border: 1px solid #111613;
             border-radius: 48px;
+            background: #19201c;
+            box-shadow: 0 30px 70px rgba(30, 36, 32, 0.22);
+            transform: rotate(1.1deg);
+        }
 
-            background: #1e1e1c;
-
-            box-shadow:
-                    0 35px 70px rgba(0, 0, 0, 0.25);
-
-            transform: rotate(2deg);
+        .phone::before {
+            content: "";
+            position: absolute;
+            top: 17px;
+            left: 50%;
+            z-index: 5;
+            width: 86px;
+            height: 22px;
+            border-radius: 99px;
+            background: #19201c;
+            transform: translateX(-50%);
         }
 
         .screen {
             height: 100%;
-
-            padding: 25px 18px;
-
+            padding: 30px 16px 18px;
             overflow: hidden;
-
             border-radius: 38px;
-
             background: #f7f7f5;
         }
 
-        /* 모바일 내부 로고 */
+        .mobile-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 17px;
+            padding: 0 3px;
+        }
+
         .mobile-logo {
             display: flex;
             align-items: center;
-
-            gap: 7px;
-
-            margin-bottom: 25px;
-
-            font-size: 17px;
-            font-weight: 800;
+            gap: 6px;
+            font-size: 15px;
+            font-weight: 850;
         }
 
         .mobile-logo img {
-            width: 28px;
-            height: 28px;
+            width: 24px;
+            height: 24px;
         }
 
-        .screen h2 {
-            margin: 0;
-
-            font-size: 25px;
-            line-height: 1.3;
-
-            letter-spacing: -1px;
-        }
-
-        .screen-description {
-            margin: 8px 0 18px;
-
-            color: #6b6b66;
-
-            font-size: 12px;
-            line-height: 1.55;
-        }
-
-        /* 검색창 */
-        .search-box {
-            padding: 14px;
-
-            border-radius: 16px;
-
-            background: #fff;
-
-            box-shadow:
-                    0 8px 24px rgba(0, 0, 0, 0.055);
-        }
-
-        .label {
-            margin-bottom: 7px;
-
-            font-size: 11px;
-            font-weight: 800;
-        }
-
-        .region {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-
-            gap: 6px;
-        }
-
-        .fake-select {
-            padding: 10px;
-
-            border: 1px solid #dfdfda;
-            border-radius: 9px;
-
-            color: #666;
-
-            font-size: 9px;
-        }
-
-        .date-buttons {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-
-            gap: 5px;
-
-            margin-top: 7px;
-        }
-
-        .date-button {
-            padding: 8px 3px;
-
-            border-radius: 8px;
-
-            background: #f1f1ef;
-
-            text-align: center;
-
+        .mobile-date {
+            color: #8a8e89;
             font-size: 9px;
             font-weight: 700;
         }
 
-        .date-button.active {
-            background: #222;
-            color: white;
+        .result-heading {
+            padding: 0 3px;
         }
 
-        .search-button {
-            margin-top: 8px;
-            padding: 10px;
+        .result-heading h2 {
+            margin: 0 0 4px;
+            font-size: 18px;
+            letter-spacing: -0.7px;
+        }
 
-            border-radius: 9px;
+        .result-heading p {
+            margin: 0 0 12px;
+            color: #7b807b;
+            font-size: 10px;
+        }
 
-            background: #222;
-            color: white;
+        .view-tabs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px;
+            margin-bottom: 10px;
+            padding: 4px;
+            border-radius: 11px;
+            background: #e9e9e5;
+        }
 
+        .view-tab {
+            padding: 8px;
+            border-radius: 8px;
+            color: #7b7f7b;
             text-align: center;
-
             font-size: 10px;
             font-weight: 800;
         }
 
-        .location-button {
-            margin-top: 6px;
-            padding: 9px;
-
-            border: 1px solid #ddd;
-            border-radius: 9px;
-
-            background: white;
-
-            text-align: center;
-
-            font-size: 9px;
-            font-weight: 800;
+        .view-tab.active {
+            background: #fff;
+            color: var(--ink);
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
         }
 
-        /* 결과 */
-        .result-title {
-            margin: 18px 0 9px;
-
-            font-size: 13px;
-            font-weight: 800;
+        .map {
+            position: relative;
+            height: 528px;
+            overflow: hidden;
+            border: 1px solid #d6d8d3;
+            border-radius: 16px;
+            background: #e8efe5;
         }
 
-        .market-card {
-            padding: 13px;
+        .map svg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+        }
 
-            border: 1px solid #e6e6e1;
-            border-radius: 14px;
+        .map-label {
+            position: absolute;
+            color: #78817b;
+            font-size: 8px;
+            font-weight: 700;
+        }
 
-            background: white;
+        .label-seoul { top: 95px; left: 118px; }
+        .label-gangwon { top: 72px; right: 56px; }
+        .label-chungju { top: 193px; left: 167px; }
+        .label-daejeon { top: 268px; left: 105px; }
+        .label-daegu { top: 294px; right: 75px; }
+
+        .marker {
+            position: absolute;
+            width: 13px;
+            height: 13px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            background: var(--blue);
+            box-shadow: 0 2px 5px rgba(33, 51, 41, 0.25);
+        }
+
+        .marker.selected {
+            z-index: 3;
+            width: 18px;
+            height: 18px;
+            border-width: 3px;
+            background: var(--orange);
+        }
+
+        .m1 { top: 120px; left: 92px; }
+        .m2 { top: 153px; left: 172px; }
+        .m3 { top: 205px; right: 66px; }
+        .m4 { top: 252px; left: 64px; }
+        .m5 { top: 330px; right: 49px; }
+        .m6 { top: 374px; left: 96px; }
+        .m7 { top: 414px; right: 106px; }
+
+        .map-card {
+            position: absolute;
+            top: 136px;
+            left: 50%;
+            z-index: 4;
+            width: 274px;
+            padding: 14px;
+            border: 1px solid #e5e5df;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 13px 30px rgba(30, 42, 34, 0.16);
+            transform: translateX(-50%);
+        }
+
+        .map-card::after {
+            content: "";
+            position: absolute;
+            bottom: -7px;
+            left: 50%;
+            width: 13px;
+            height: 13px;
+            border-right: 1px solid #e5e5df;
+            border-bottom: 1px solid #e5e5df;
+            background: #fff;
+            transform: translateX(-50%) rotate(45deg);
+        }
+
+        .card-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
         }
 
         .badge {
             display: inline-block;
-
-            margin-bottom: 8px;
-            padding: 5px 7px;
-
-            border-radius: 999px;
-
+            margin-bottom: 7px;
+            padding: 4px 7px;
+            border-radius: 99px;
             background: #fff1d6;
             color: #8a5700;
-
             font-size: 8px;
-            font-weight: 800;
+            font-weight: 850;
+        }
+
+        .close {
+            color: #9a9e99;
+            font-size: 15px;
+            line-height: 1;
         }
 
         .market-name {
             margin-bottom: 5px;
+            font-size: 15px;
+            font-weight: 850;
+            letter-spacing: -0.35px;
+        }
 
-            font-size: 14px;
+        .market-date {
+            margin-bottom: 4px;
+            color: var(--ink);
+            font-size: 10px;
             font-weight: 800;
         }
 
         .market-detail {
-            color: #676762;
-
-            font-size: 9px;
-            line-height: 1.6;
+            color: #727772;
+            font-size: 8.5px;
+            line-height: 1.55;
         }
 
         .tags {
             display: flex;
-
-            gap: 5px;
-
+            gap: 4px;
             margin-top: 8px;
         }
 
         .tag {
             padding: 4px 6px;
-
             border-radius: 6px;
+            background: #f2f3ef;
+            font-size: 7.5px;
+        }
 
-            background: #f4f4f1;
+        .card-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            margin-top: 10px;
+        }
 
+        .card-action {
+            padding: 8px;
+            border: 1px solid #dedfda;
+            border-radius: 8px;
+            background: #fff;
+            text-align: center;
             font-size: 8px;
+            font-weight: 850;
         }
 
-        /* 오른쪽 설명 카드 */
-        .floating-card {
+        .card-action.primary {
+            border-color: #222;
+            background: #222;
+            color: #fff;
+        }
+
+        .map-credit {
             position: absolute;
+            right: 7px;
+            bottom: 5px;
+            color: #78817b;
+            font-size: 6px;
+        }
 
-            right: -45px;
-            bottom: 100px;
-
-            width: 200px;
-
-            padding: 15px 17px;
-
-            border: 1px solid #f0d5c8;
+        .floating-note {
+            position: absolute;
+            right: -34px;
+            bottom: 72px;
+            z-index: 3;
+            width: 190px;
+            padding: 15px 16px;
+            border: 1px solid #eed4c7;
             border-radius: 16px;
-
-            background: #fffaf7;
-
-            box-shadow:
-                    0 15px 30px rgba(0, 0, 0, 0.08);
-
-            transform: rotate(-3deg);
-
-            z-index: 2;
+            background: #fffaf6;
+            box-shadow: 0 15px 35px rgba(42, 39, 34, 0.1);
+            transform: rotate(-2deg);
         }
 
-        .floating-card strong {
+        .floating-note strong {
             display: block;
-
-            margin-bottom: 6px;
-
-            font-size: 13px;
+            margin-bottom: 5px;
+            color: var(--orange);
+            font-size: 12px;
         }
 
-        .floating-card span {
-            color: #766f68;
-
-            font-size: 11px;
+        .floating-note span {
+            color: #716e69;
+            font-size: 10px;
             line-height: 1.5;
+        }
+
+        @media (max-width: 900px) {
+            body {
+                overflow-x: auto;
+            }
         }
     </style>
 </head>
 
 <body>
-
 <div class="page">
-
-    <!-- 상단 -->
     <header class="top">
-
         <div class="logo">
-
-            <!--
-                실제 프로젝트의 logo.png를 사용합니다.
-                이 HTML을 static 폴더에서 실행한다면
-                /images/logo.png 그대로 사용할 수 있습니다.
-            -->
-            <img
-                    src="./images/logo.png"
-                    alt="오늘장 로고"
-            >
-
+            <img src="./images/logo.png" alt="오늘장 로고">
             <span>오늘장</span>
-
         </div>
 
-        <div class="service-url">
-            todayjang.site
+        <div class="top-meta">
+            <span class="release">v1.2 · MAP VIEW</span>
+            <span class="service-url">todayjang.site</span>
         </div>
-
     </header>
 
-
-    <!-- 메인 -->
     <main class="hero">
-
-        <!-- 왼쪽 프로젝트 설명 -->
-        <section>
-
-            <div class="category">
-                LOCAL MARKET · MOBILE WEB SERVICE
-            </div>
+        <section class="copy">
+            <div class="eyebrow">LOCAL MARKET DISCOVERY</div>
 
             <h1>
-                여행지의 장날을<br>
-
-                <span class="highlight">
-                    오늘 바로
-                </span>
-
-                찾아보세요.
+                여행 날짜에 맞는<br>
+                <em>오늘의 장</em>을 지도에서.
             </h1>
 
-
             <p class="description">
-                지역과 날짜, 현재 위치를 기준으로
-                전국 전통시장과 5일장 정보를 빠르게 확인할 수 있는
-                모바일 웹 서비스입니다.
+                여행 지역과 방문 날짜만 선택하면 그날 열리는 전국 5일장을 찾고,
+                시장의 위치와 규모까지 한눈에 비교할 수 있는 모바일 웹 서비스입니다.
             </p>
 
+            <div class="feature-grid">
+                <article class="feature">
+                    <div class="feature-icon">⌖</div>
+                    <strong>지도 중심 탐색</strong>
+                    <span>검색 결과의 위치와 상세 정보를 한 화면에서 확인</span>
+                </article>
+
+                <article class="feature">
+                    <div class="feature-icon">◷</div>
+                    <strong>날짜별 장날 검색</strong>
+                    <span>오늘 또는 여행 날짜에 실제로 열리는 시장만 검색</span>
+                </article>
+
+                <article class="feature">
+                    <div class="feature-icon">◎</div>
+                    <strong>주변 5일장 찾기</strong>
+                    <span>현재 위치에서 20km 안의 장을 가까운 순서로 안내</span>
+                </article>
+            </div>
 
             <div class="story">
-
-                <strong>
-                    가족 여행에서 시작된 작은 불편.
-                </strong>
-
-                <br>
-
-                장날 정보를 찾기 어려워 길가의 현수막에 의존했던 경험에서
-                “여행 중 바로 확인할 수 있는 5일장 서비스가 있으면 좋겠다”는
-                아이디어로 시작했습니다.
-
+                <strong>실제 여행의 불편에서 시작</strong>
+                <span>기획 · 공공데이터 가공 · 백엔드 · UI 구현 · AWS 배포까지 직접 완성했습니다.</span>
             </div>
-
-
-            <div class="tech-stack">
-
-                <span class="tech">Java</span>
-                <span class="tech">Spring Boot</span>
-                <span class="tech">PostgreSQL</span>
-                <span class="tech">Docker</span>
-                <span class="tech">AWS EC2</span>
-                <span class="tech">Nginx · HTTPS</span>
-
-            </div>
-
-
-            <div class="project-info">
-
-                <div class="info">
-                    <strong>3 Days</strong>
-                    <span>집중 개발</span>
-                </div>
-
-                <div class="info">
-                    <strong>Public Data</strong>
-                    <span>전국전통시장표준데이터</span>
-                </div>
-
-                <div class="info">
-                    <strong>AI-assisted</strong>
-                    <span>기획 · 구현 · 검증 보조</span>
-                </div>
-
-            </div>
-
         </section>
 
-
-        <!-- 오른쪽 모바일 화면 -->
-        <section class="phone-area">
-
-            <div class="phone-background"></div>
+        <section class="phone-area" aria-label="오늘장 지도 검색 화면 미리보기">
+            <div class="phone-shadow"></div>
 
             <div class="phone">
-
                 <div class="screen">
-
-                    <div class="mobile-logo">
-
-                        <img
-                                src="./images/logo.png"
-                                alt="오늘장"
-                        >
-
-                        오늘장
-
+                    <div class="mobile-head">
+                        <div class="mobile-logo">
+                            <img src="./images/logo.png" alt="">
+                            오늘장
+                        </div>
+                        <span class="mobile-date">여행 일정 검색 결과</span>
                     </div>
 
-
-                    <h2>
-                        여행지 주변 장날을<br>
-                        쉽게 찾아보세요.
-                    </h2>
-
-                    <p class="screen-description">
-                        오늘 열리는 장부터 여행 날짜에 맞는
-                        5일장까지 확인할 수 있어요.
-                    </p>
-
-
-                    <div class="search-box">
-
-                        <div class="label">
-                            여행 지역
-                        </div>
-
-                        <div class="region">
-
-                            <div class="fake-select">
-                                강원특별자치도
-                            </div>
-
-                            <div class="fake-select">
-                                강릉시
-                            </div>
-
-                        </div>
-
-
-                        <div
-                                class="label"
-                                style="margin-top: 12px;"
-                        >
-                            방문 날짜
-                        </div>
-
-
-                        <div class="date-buttons">
-
-                            <div class="date-button active">
-                                오늘
-                            </div>
-
-                            <div class="date-button">
-                                내일
-                            </div>
-
-                            <div class="date-button">
-                                이번 주
-                            </div>
-
-                            <div class="date-button">
-                                날짜 선택
-                            </div>
-
-                        </div>
-
-
-                        <div class="search-button">
-                            장날 찾기
-                        </div>
-
-
-                        <div class="location-button">
-                            📍 내 주변 오늘 열리는 장
-                        </div>
-
+                    <div class="result-heading">
+                        <h2>8월 10일 월요일 열리는 장</h2>
+                        <p>총 12개의 장이 열려요</p>
                     </div>
 
-
-                    <div class="result-title">
-                        오늘 열리는 장
+                    <div class="view-tabs">
+                        <div class="view-tab active">지도 보기</div>
+                        <div class="view-tab">목록 보기</div>
                     </div>
 
+                    <div class="map">
+                        <svg viewBox="0 0 330 528" aria-hidden="true">
+                            <rect width="330" height="528" fill="#e8efe5"/>
+                            <path d="M-20 80 C70 55, 110 128, 190 96 S286 38, 360 75" fill="none" stroke="#f7f7f2" stroke-width="18"/>
+                            <path d="M32 -20 C55 82, 126 126, 93 221 S71 355, 147 560" fill="none" stroke="#fbfaf6" stroke-width="13"/>
+                            <path d="M250 -10 C218 81, 280 148, 221 229 S178 392, 265 548" fill="none" stroke="#faf9f4" stroke-width="14"/>
+                            <path d="M-20 304 C68 279, 122 327, 198 299 S285 272, 355 323" fill="none" stroke="#f9f8f3" stroke-width="16"/>
+                            <path d="M108 -10 C121 81, 180 137, 153 225 S125 389, 178 540" fill="none" stroke="#cddfed" stroke-width="5"/>
+                            <path d="M0 177 C97 146, 169 182, 345 136" fill="none" stroke="#d8d9d1" stroke-width="2" stroke-dasharray="5 5"/>
+                            <path d="M22 442 C98 392, 185 421, 337 381" fill="none" stroke="#d8d9d1" stroke-width="2" stroke-dasharray="5 5"/>
+                            <path d="M198 0 L217 528" fill="none" stroke="#d8d9d1" stroke-width="2" stroke-dasharray="5 5"/>
+                        </svg>
 
-                    <div class="market-card">
+                        <span class="map-label label-seoul">서울</span>
+                        <span class="map-label label-gangwon">강원</span>
+                        <span class="map-label label-chungju">충주</span>
+                        <span class="map-label label-daejeon">대전</span>
+                        <span class="map-label label-daegu">대구</span>
 
-                        <span class="badge">
-                            5일장
-                        </span>
+                        <span class="marker m1"></span>
+                        <span class="marker m2 selected"></span>
+                        <span class="marker m3"></span>
+                        <span class="marker m4"></span>
+                        <span class="marker m5"></span>
+                        <span class="marker m6"></span>
+                        <span class="marker m7"></span>
 
+                        <article class="map-card">
+                            <div class="card-top">
+                                <div>
+                                    <span class="badge">이날 장이 열려요</span>
+                                    <div class="market-name">평창올림픽시장</div>
+                                </div>
+                                <span class="close">×</span>
+                            </div>
 
-                        <div class="market-name">
-                            강릉 중앙시장
-                        </div>
+                            <div class="market-date">8월 10일 월요일</div>
+                            <div class="market-detail">
+                                상설시장·5일장 · 장날 5일, 10일 · 점포 54개<br>
+                                강원특별자치도 평창군 평창중앙로 27-26
+                            </div>
 
+                            <div class="tags">
+                                <span class="tag">농산물</span>
+                                <span class="tag">가공식품</span>
+                                <span class="tag">주차 가능</span>
+                            </div>
 
-                        <div class="market-detail">
-                            강원특별자치도 강릉시<br>
-                            오늘 운영 · 전통시장
-                        </div>
+                            <div class="card-actions">
+                                <div class="card-action primary">상세보기</div>
+                                <div class="card-action">주소 복사</div>
+                            </div>
+                        </article>
 
-
-                        <div class="tags">
-
-                            <span class="tag">
-                                주차장
-                            </span>
-
-                            <span class="tag">
-                                공중화장실
-                            </span>
-
-                            <span class="tag">
-                                먹거리
-                            </span>
-
-                        </div>
-
+                        <span class="map-credit">© OpenStreetMap contributors</span>
                     </div>
-
                 </div>
-
             </div>
 
-
-            <div class="floating-card">
-
-                <strong>
-                    실제 문제 → 실제 서비스
-                </strong>
-
-                <span>
-                    기획부터 데이터 가공,
-                    백엔드, 화면 구현,
-                    AWS 배포까지 직접 완성
-                </span>
-
-            </div>
-
+            <aside class="floating-note">
+                <strong>검색에서 탐색으로</strong>
+                <span>목록뿐 아니라 지도 위에서 시장의 위치와 요약 정보를 바로 확인할 수 있어요.</span>
+            </aside>
         </section>
-
     </main>
-
 </div>
-
 </body>
 </html>
